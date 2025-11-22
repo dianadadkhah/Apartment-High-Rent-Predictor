@@ -1,4 +1,5 @@
-Code of Conduct
+# Code of Conduct
+
 Our project team is committed to creating a safe, inclusive, respectful, and collaborative environment for everyone. We welcome contributors of all backgrounds, identities, and experience levels, and we believe that diversity strengthens the quality and impact of our work.
 
 1. Diversity and Inclusivity Statement
