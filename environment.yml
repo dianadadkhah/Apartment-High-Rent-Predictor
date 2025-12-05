@@ -8,13 +8,16 @@ dependencies:
   - numpy
   - pandas
   - scikit-learn
-  - altair
+  - seaborn
   - matplotlib
+  - statsmodels
   - jupyterlab
-  - pointblank
-  - seaborn        
-  - ucimlrepo      
+  - ipykernel
+  - click
+  - quarto
+  - requests
   - pip
 
   - pip:
       - pandera
+      - pydantic
