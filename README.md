@@ -25,14 +25,13 @@ Create the conda environment using:
 - conda env create -f environment.yml
 - to activate it: conda activate Group_26
    
-5. Navigate to the root of this project on your computer using the command line and enter the following command:
+4. Navigate to the root of this project on your computer using the command line and enter the following command:
    
 ``` 
 docker compose up
 ```
 
-Copy and paste this URL into your browser: `http://127.0.0.1:8888/lab?token=mds522`
-Run conda activate Group_26 in terminal to ensure the environment has been activated. 
+Copy and paste this URL into your browser: `http://127.0.0.1:8888/lab?token=mds522`. Run conda activate Group_26 in terminal to ensure the environment has been activated. 
 
 To run the analysis, open a terminal and run the following commands:
 
