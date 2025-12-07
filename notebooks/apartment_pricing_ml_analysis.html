@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,19 +23,18 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="apartment_pricing_ml_analysis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="apartment_pricing_ml_analysis_files/libs/clipboard/clipboard.min.js"></script>
 <script src="apartment_pricing_ml_analysis_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="apartment_pricing_ml_analysis_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="apartment_pricing_ml_analysis_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="apartment_pricing_ml_analysis_files/libs/quarto-html/popper.min.js"></script>
 <script src="apartment_pricing_ml_analysis_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="apartment_pricing_ml_analysis_files/libs/quarto-html/anchor.min.js"></script>
 <link href="apartment_pricing_ml_analysis_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="apartment_pricing_ml_analysis_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="apartment_pricing_ml_analysis_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="apartment_pricing_ml_analysis_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="apartment_pricing_ml_analysis_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="apartment_pricing_ml_analysis_files/libs/bootstrap/bootstrap-1e118674f8eeaf0dc11d6faf9a2d8791.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+<link href="apartment_pricing_ml_analysis_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
@@ -133,12 +132,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
 <li>Creating a binary target variable <code>high_price</code></li>
 </ol>
-<div id="c9e2eb72" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="2">
+<div id="798e5814" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -167,7 +166,7 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
+<td data-quarto-table-cell-role="th">0</td>
 <td>5668640009</td>
 <td>housing/rent/apartment</td>
 <td>One BR 507 &amp; 509 Esplanade</td>
@@ -191,7 +190,7 @@ ul.task-list li input[type="checkbox"] {
 <td>1.577360e+09</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
+<td data-quarto-table-cell-role="th">1</td>
 <td>5668639818</td>
 <td>housing/rent/apartment</td>
 <td>Three BR 146 Lochview Drive</td>
@@ -215,7 +214,7 @@ ul.task-list li input[type="checkbox"] {
 <td>1.577360e+09</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">2</th>
+<td data-quarto-table-cell-role="th">2</td>
 <td>5668639686</td>
 <td>housing/rent/apartment</td>
 <td>Three BR 3101 Morningside Drive</td>
@@ -239,7 +238,7 @@ ul.task-list li input[type="checkbox"] {
 <td>1.577360e+09</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
+<td data-quarto-table-cell-role="th">3</td>
 <td>5668639659</td>
 <td>housing/rent/apartment</td>
 <td>Two BR 209 Aegean Way</td>
@@ -263,7 +262,7 @@ ul.task-list li input[type="checkbox"] {
 <td>1.577360e+09</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
+<td data-quarto-table-cell-role="th">4</td>
 <td>5668639374</td>
 <td>housing/rent/apartment</td>
 <td>One BR 4805 Marquette NE</td>
@@ -293,12 +292,12 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<div id="bc052235" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="3">
+<div id="b8f9be5c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -316,7 +315,7 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
+<td data-quarto-table-cell-role="th">0</td>
 <td>2195.0</td>
 <td>542.0</td>
 <td>1.0</td>
@@ -329,7 +328,7 @@ ul.task-list li input[type="checkbox"] {
 <td>1</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
+<td data-quarto-table-cell-role="th">1</td>
 <td>1250.0</td>
 <td>1500.0</td>
 <td>1.5</td>
@@ -342,7 +341,7 @@ ul.task-list li input[type="checkbox"] {
 <td>0</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">2</th>
+<td data-quarto-table-cell-role="th">2</td>
 <td>1600.0</td>
 <td>820.0</td>
 <td>1.0</td>
@@ -355,7 +354,7 @@ ul.task-list li input[type="checkbox"] {
 <td>0</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
+<td data-quarto-table-cell-role="th">3</td>
 <td>975.0</td>
 <td>624.0</td>
 <td>1.0</td>
@@ -368,7 +367,7 @@ ul.task-list li input[type="checkbox"] {
 <td>0</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
+<td data-quarto-table-cell-role="th">4</td>
 <td>1250.0</td>
 <td>965.0</td>
 <td>1.5</td>
@@ -386,7 +385,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<div id="70118227" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="4">
+<div id="cd3e0ec6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>Target distribution check passed? True
 Outliers detected in column 'price':
@@ -494,7 +493,7 @@ Some checks failed:
 0             2         False  None  </code></pre>
 </div>
 </div>
-<div id="1ce7cbe2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="5">
+<div id="aa787e72" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="5">
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>(28560, 7140)</code></pre>
 </div>
@@ -512,12 +511,12 @@ Some checks failed:
 </li>
 <li>Relationship between size and price</li>
 </ul>
-<div id="d271efba" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="7">
+<div id="be8d9fb8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="7">
 <div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -528,49 +527,49 @@ Some checks failed:
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">count</th>
+<td data-quarto-table-cell-role="th">count</td>
 <td>35700.000000</td>
 <td>35700.000000</td>
 <td>35700.000000</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">mean</th>
+<td data-quarto-table-cell-role="th">mean</td>
 <td>1487.928235</td>
 <td>940.632157</td>
 <td>1.440294</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">std</th>
+<td data-quarto-table-cell-role="th">std</td>
 <td>722.414581</td>
 <td>338.539094</td>
 <td>0.533467</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">min</th>
+<td data-quarto-table-cell-role="th">min</td>
 <td>285.000000</td>
 <td>200.000000</td>
 <td>1.000000</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">25%</th>
+<td data-quarto-table-cell-role="th">25%</td>
 <td>1025.000000</td>
 <td>720.750000</td>
 <td>1.000000</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">50%</th>
+<td data-quarto-table-cell-role="th">50%</td>
 <td>1327.000000</td>
 <td>897.000000</td>
 <td>1.000000</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">75%</th>
+<td data-quarto-table-cell-role="th">75%</td>
 <td>1745.000000</td>
 <td>1105.000000</td>
 <td>2.000000</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">max</th>
+<td data-quarto-table-cell-role="th">max</td>
 <td>19500.000000</td>
 <td>12000.000000</td>
 <td>7.000000</td>
@@ -581,7 +580,7 @@ Some checks failed:
 </div>
 </div>
 </div>
-<div id="11e1b22e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="8">
+<div id="4f92b380" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="8">
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>high_price
 1    0.510728
@@ -589,7 +588,7 @@ Some checks failed:
 Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
-<div id="0dc8ea8b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="9">
+<div id="5c0b0b27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -598,7 +597,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="c600b5c4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="10">
+<div id="ae8e3f33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -619,12 +618,12 @@ Name: proportion, dtype: float64</code></pre>
 - fee<br>
 - has_photo</p>
 <p>We use a train-test split and a preprocessing pipeline.</p>
-<div id="4b98a01c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="11">
+<div id="cfbbe028" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -636,7 +635,7 @@ Name: proportion, dtype: float64</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">Logistic Regression</th>
+<td data-quarto-table-cell-role="th">Logistic Regression</td>
 <td>0.705742</td>
 <td>0.726952</td>
 <td>0.678914</td>
@@ -648,7 +647,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="7088e5c3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="12">
+<div id="923c1ce7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -743,14 +742,13 @@ Name: proportion, dtype: float64</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
