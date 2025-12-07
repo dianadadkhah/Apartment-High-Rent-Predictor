@@ -1,55 +1,60 @@
 import click
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, ConfusionMatrixDisplay
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, ConfusionMatrixDisplay
+from sklearn.pipeline import Pipeline
 
 @click.command()
-@click.argument("x_train_file", type=str)
-@click.argument("x_test_file", type=str)
-@click.argument("y_train_file", type=str)
-@click.argument("y_test_file", type=str)
+@click.argument("input_data", type=str)
 @click.argument("output", type=str)
-def main(x_train_file, x_test_file, y_train_file, y_test_file, output):
+def main(input_data, output):
     """
-    Train a Logistic Regression model on preprocessed train/test CSVs,
-    encode categorical features, and save performance metrics and confusion matrix.
+    Train Logistic Regression on preprocessed data and save metrics + confusion matrix.
+    Expects a CSV with features and 'high_price' target column.
     """
+    # -------------------------------
     # Load data
-    X_train = pd.read_csv(x_train_file)
-    X_test = pd.read_csv(x_test_file)
-    y_train = pd.read_csv(y_train_file).squeeze()
-    y_test = pd.read_csv(y_test_file).squeeze()
-
-    print("[INFO] Data loaded successfully.")
-
-    # Identify numeric and categorical features
-    numeric_features = ["square_feet", "bathrooms"]
-    categorical_features = ["bedrooms", "state", "pets_allowed", "fee", "has_photo"]
-
-    # Preprocessing: OneHotEncode categorical features
+    # -------------------------------
+    df = pd.read_csv(input_data)
+    
+    # Split into features and target
+    X = df.drop(columns=["high_price", "price", "state_median_price"])
+    y = df["high_price"]
+    
+    # Split train/test
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, stratify=y, random_state=123
+    )
+    
+    # Identify categorical and numeric features
+    numeric_features = X.select_dtypes(include=["int64", "float64"]).columns.tolist()
+    categorical_features = X.select_dtypes(include=["object"]).columns.tolist()
+    
+    # Preprocessing pipeline
     preprocessor = ColumnTransformer(
         transformers=[
-            ("num", "passthrough", numeric_features),
-            ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_features)
-        ]
+            ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical_features),
+        ],
+        remainder="passthrough"
     )
-
-    X_train_encoded = preprocessor.fit_transform(X_train)
-    X_test_encoded = preprocessor.transform(X_test)
-
-    print("[INFO] Data preprocessing complete.")
-
-    # Train Logistic Regression model
-    model = LogisticRegression(max_iter=1000)
-    model.fit(X_train_encoded, y_train)
-    y_pred = model.predict(X_test_encoded)
-
-    print("[INFO] Model training complete.")
-
-    # Collect performance metrics
+    
+    # Full pipeline
+    pipeline = Pipeline([
+        ("preprocessor", preprocessor),
+        ("model", LogisticRegression(max_iter=1000))
+    ])
+    
+    # Train model
+    pipeline.fit(X_train, y_train)
+    
+    # Predict
+    y_pred = pipeline.predict(X_test)
+    
+    # Metrics
     metrics = {
         "Accuracy": accuracy_score(y_test, y_pred),
         "Precision": precision_score(y_test, y_pred),
@@ -57,12 +62,10 @@ def main(x_train_file, x_test_file, y_train_file, y_test_file, output):
         "F1-score": f1_score(y_test, y_pred)
     }
     df_metrics = pd.DataFrame(metrics, index=["Logistic Regression"])
-
-    # Save metrics to CSV
     df_metrics.to_csv(f"{output}/logistic_regression_metrics.csv", index=True)
     print(f"[INFO] Metrics saved to: {output}/logistic_regression_metrics.csv")
-
-    # Plot and save confusion matrix
+    
+    # Confusion matrix
     ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
     plt.title("Figure 3: Confusion Matrix")
     plt.savefig(f"{output}/confusion_matrix.png", dpi=300, bbox_inches="tight")
