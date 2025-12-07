@@ -11,6 +11,9 @@ Contributors / Authors
 
 This project investigates whether a machine learning model can accurately predict if an apartment in the U.S. is high-priced relative to the median rent within its state. The model leverages features such as location, size, and the number of bedrooms and bathrooms to make these predictions. With rental affordability becoming an increasingly important issue in America, we were interested in understanding how rental prices vary across states and how this variation affects the ability of renters, landlords, and policymakers to identify what determines a “high-priced” apartment in a given area.
 
+## Findings Summary and limitations 
+Our logistic regression model got an accuracy of approximately 70 percent with precision and recall around 0.72 and 0.66 indicating that the model performs reasonably well at identifying high-priced apartment listings relative to each state median rent. However, there are some limitations, the model still misclassifies many high-priced listings, suggesting that additional features ( such as neighborhood characteristics or text-based listing information) and more advanced models could further improve performance.
+
 ## How to Run the Data Analysis
 
 1. Clone the repository
@@ -20,14 +23,37 @@ This project investigates whether a machine learning model can accurately predic
 
 ## Dependencies
 
-This project uses the following software dependencies (as listed in environment.yml):
+This project uses the following software dependencies, all of which are specified in the environment.yml file:
 
-* Python 3.12
-* pandas
-* numpy
-* scikit-learn
-* jupyterlab
-All dependencies can be installed automatically by creating the conda environment:
+Python 3.11
+
+numpy 1.26.4
+
+pandas 2.2.2
+
+scikit-learn 1.4.2
+
+altair 5.3.0
+
+matplotlib 3.8.4
+
+seaborn 0.13.2
+
+jupyterlab 4.2.5
+
+click 8.1.7
+
+pandera 0.20.3 (installed via pip)
+
+To install all dependencies, create the conda environment using:
+
+conda env create -f environment.yml
+
+then activate it: 
+
+conda activate Group_26
+
+
 
 ## License(s)
 
