@@ -3,7 +3,7 @@ import pandas as pd
 from ucimlrepo import fetch_ucirepo
 
 @click.command()
-@click.option('--output_file', help='Path to save the raw dataset, e.g., data/raw.csv')
+@click.option('--output_file', default="results/data.csv")
 def main(output_file):
 
     # 1. Fetch dataset from UCI (Apartment for Rent dataset, ID = 555)

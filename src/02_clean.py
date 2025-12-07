@@ -53,167 +53,167 @@ def main(input_data, output):
 
 # Data Validation Checks
 
-numeric_cols = ["price", "square_feet", "bathrooms", "bedrooms", "state_median_price"]
-
-target = "high_price"
-threshold = 0.9  # correlation threshold
-
-allowed_states = [
-    'CA','VA','NM','CO','WV','WA','TX','IL','MS','OR','FL','MO','PA','IA',
-    'WI','NC','GA','OK','RI','NJ','IN','MD','OH','ND','NE','DC','AZ','MA',
-    'MI','SC','ID','MN','KS','TN','UT','KY','SD','LA','AK','AR','AL','CT',
-    'NY','NV','HI','WY','VT','NH','MT','DE','ME'
-]
-
-allowed_pets = ['Cats', 'Cats,Dogs', 'Dogs', 'Cats,Dogs,None']
-allowed_fee = ['No', 'Yes']
-allowed_has_photo = ['Thumbnail', 'Yes', 'No']
-
-def check_no_outliers(df):
-    has_outliers = False  
-
-    for col in numeric_cols:
-        q1 = df[col].quantile(0.25)
-        q3 = df[col].quantile(0.75)
-        iqr = q3 - q1
-        lower = q1 - 1.5 * iqr
-        upper = q3 + 1.5 * iqr
+    numeric_cols = ["price", "square_feet", "bathrooms", "bedrooms", "state_median_price"]
+    
+    target = "high_price"
+    threshold = 0.9  # correlation threshold
+    
+    allowed_states = [
+        'CA','VA','NM','CO','WV','WA','TX','IL','MS','OR','FL','MO','PA','IA',
+        'WI','NC','GA','OK','RI','NJ','IN','MD','OH','ND','NE','DC','AZ','MA',
+        'MI','SC','ID','MN','KS','TN','UT','KY','SD','LA','AK','AR','AL','CT',
+        'NY','NV','HI','WY','VT','NH','MT','DE','ME'
+    ]
+    
+    allowed_pets = ['Cats', 'Cats,Dogs', 'Dogs', 'Cats,Dogs,None']
+    allowed_fee = ['No', 'Yes']
+    allowed_has_photo = ['Thumbnail', 'Yes', 'No']
+    
+    def check_no_outliers(df):
+        has_outliers = False  
+    
+        for col in numeric_cols:
+            q1 = df[col].quantile(0.25)
+            q3 = df[col].quantile(0.75)
+            iqr = q3 - q1
+            lower = q1 - 1.5 * iqr
+            upper = q3 + 1.5 * iqr
+            
+            outliers = df[(df[col] < lower) | (df[col] > upper)]
+            if not outliers.empty:
+                has_outliers = True
+                print(f"Outliers detected in column '{col}':")
+                print(outliers[[col]])
+                print("-"*40)
         
-        outliers = df[(df[col] < lower) | (df[col] > upper)]
-        if not outliers.empty:
-            has_outliers = True
-            print(f"Outliers detected in column '{col}':")
-            print(outliers[[col]])
-            print("-"*40)
+        return not has_outliers  # True if no outliers, False otherwise
     
-    return not has_outliers  # True if no outliers, False otherwise
-
-def check_categories(df):
-    invalid_found = False  # track if any invalid category exists
+    def check_categories(df):
+        invalid_found = False  # track if any invalid category exists
+        
+        category_mapping = {
+            "state": allowed_states,
+            "pets_allowed": allowed_pets,
+            "fee": allowed_fee,
+            "has_photo": allowed_has_photo
+        }
+        
+        for col, allowed in category_mapping.items():
+            invalid_rows = df[~df[col].isin(allowed)]
+            if not invalid_rows.empty:
+                invalid_found = True
+                print(f"Unexpected values in column '{col}':")
+                print(invalid_rows[[col]])
+                print("-"*40)
+        
+        return not invalid_found  # True if all categories valid, False otherwise
     
-    category_mapping = {
-        "state": allowed_states,
-        "pets_allowed": allowed_pets,
-        "fee": allowed_fee,
-        "has_photo": allowed_has_photo
-    }
+    def check_target_distribution(df):
+        # Only 0 or 1 allowed
+        unique_vals = set(df["high_price"].unique())
+        if not unique_vals.issubset({0, 1}):
+            print(f"Unexpected target values found: {unique_vals}")
+            return False
+        
+        # Check class balance
+        ratio = df["high_price"].mean()  # proportion of 1s
+        if ratio <= 0.05 or ratio >= 0.95:
+            print(f"Target distribution is extremely imbalanced: {ratio:.2f} proportion of 1s")
+            return False
+        
+        return True
     
-    for col, allowed in category_mapping.items():
-        invalid_rows = df[~df[col].isin(allowed)]
-        if not invalid_rows.empty:
-            invalid_found = True
-            print(f"Unexpected values in column '{col}':")
-            print(invalid_rows[[col]])
-            print("-"*40)
+    result = check_target_distribution(df_subset)
+    print("Target distribution check passed?", result)
     
-    return not invalid_found  # True if all categories valid, False otherwise
-
-def check_target_distribution(df):
-    # Only 0 or 1 allowed
-    unique_vals = set(df["high_price"].unique())
-    if not unique_vals.issubset({0, 1}):
-        print(f"Unexpected target values found: {unique_vals}")
-        return False
+    def check_corr_target(df):
+        corr = df[numeric_cols + [target]].corr()[target].drop(target)
+        return (abs(corr) < threshold).all()
     
-    # Check class balance
-    ratio = df["high_price"].mean()  # proportion of 1s
-    if ratio <= 0.05 or ratio >= 0.95:
-        print(f"Target distribution is extremely imbalanced: {ratio:.2f} proportion of 1s")
-        return False
+    def check_corr_feats(df):
+        for i in range(len(numeric_cols)):
+            for j in range(i + 1, len(numeric_cols)):
+                corr = df[numeric_cols[i]].corr(df[numeric_cols[j]])
+                if abs(corr) >= threshold:
+                    return False
+        return True
     
-    return True
-
-result = check_target_distribution(df_subset)
-print("Target distribution check passed?", result)
-
-def check_corr_target(df):
-    corr = df[numeric_cols + [target]].corr()[target].drop(target)
-    return (abs(corr) < threshold).all()
-
-def check_corr_feats(df):
-    for i in range(len(numeric_cols)):
-        for j in range(i + 1, len(numeric_cols)):
-            corr = df[numeric_cols[i]].corr(df[numeric_cols[j]])
-            if abs(corr) >= threshold:
-                return False
-    return True
-
-schema = DataFrameSchema(
-    {
-        "price": Column(pa.Float, nullable=False,
-            checks=[Check.greater_than(0),
-                    Check(lambda s: s.isna().mean() <= 0.05)]),
-
-        "square_feet": Column(pa.Float, nullable=False,
-            checks=[Check.greater_than(0),
-                    Check(lambda s: s.isna().mean() <= 0.05)]),
-
-        "bathrooms": Column(pa.Float, nullable=False,
-            checks=[Check.greater_than_or_equal_to(0),
-                    Check(lambda s: s.isna().mean() <= 0.05)]),
-
-        "bedrooms": Column(pa.Float, nullable=False,
-            checks=[Check.greater_than_or_equal_to(0),
-                    Check(lambda s: s.isna().mean() <= 0.05)]),
-
-        "state": Column(pa.String, nullable=False,
-            checks=[Check.isin(allowed_states),
-                    Check.str_length(min_value=1)]),
-
-        "pets_allowed": Column(pa.String, nullable=True,
-            checks=[Check.isin(allowed_pets)]),
-
-        "fee": Column(pa.String, nullable=True,
-            checks=[Check.isin(allowed_fee)]),
-
-        "has_photo": Column(pa.String, nullable=False,
-            checks=[Check.isin(allowed_has_photo)]),
-
-        "state_median_price": Column(pa.Float, nullable=False,
-            checks=[Check.greater_than(0),
-                    Check(lambda s: s.isna().mean() <= 0.05)]),
-
-        "high_price": Column(pa.Int, nullable=False,
-            checks=[Check.isin([0, 1])]),
-    },
-
-    checks=[
-        Check(lambda df: df.duplicated().sum() == 0, error="Duplicate rows detected"),
-        Check(lambda df: ~df.isna().all(axis=1)),
-        Check(check_no_outliers, error="Outliers detected in numeric columns."),
-        Check(check_categories, error="Unexpected categorical values."),
-        Check(check_target_distribution, error="Target variable distribution is anomalous"),
-        Check(check_corr_target, error="Anomalous correlation between target and features."),
-        Check(check_corr_feats, error="Anomalous correlation between features")
-    ])
-
-try:
-    validated_df = schema.validate(df_subset, lazy=True)
-    print("All checks passed!")
-except pa.errors.SchemaErrors as e:
-    print("Some checks failed:")
-    print(e.failure_cases)
-
-# Splitting data 
-numeric_features = ["square_feet", "bathrooms"]
-categorical_features = ["bedrooms", "state", "pets_allowed", "fee", "has_photo"]
-
-model_df = df_subset[numeric_features + categorical_features + ["high_price"]].copy()
-
-X = model_df[numeric_features + categorical_features]
-y = model_df["high_price"]
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, stratify=y, random_state=123
-)
-
-# Saving cleaned and processed data
-X_train.to_csv("results/X_train.csv", index=False)
-X_test.to_csv("results/X_test.csv", index=False)
-y_train.to_csv("results/y_train.csv", index=False)
-y_test.to_csv("results/y_test.csv", index=False)
-df_subset.to_csv("results/full_cleaned_data.csv", index=False)
-print("Data cleaning and processing complete! Files saved in the results folder.")
-
+    schema = DataFrameSchema(
+        {
+            "price": Column(pa.Float, nullable=False,
+                checks=[Check.greater_than(0),
+                        Check(lambda s: s.isna().mean() <= 0.05)]),
+    
+            "square_feet": Column(pa.Float, nullable=False,
+                checks=[Check.greater_than(0),
+                        Check(lambda s: s.isna().mean() <= 0.05)]),
+    
+            "bathrooms": Column(pa.Float, nullable=False,
+                checks=[Check.greater_than_or_equal_to(0),
+                        Check(lambda s: s.isna().mean() <= 0.05)]),
+    
+            "bedrooms": Column(pa.Float, nullable=False,
+                checks=[Check.greater_than_or_equal_to(0),
+                        Check(lambda s: s.isna().mean() <= 0.05)]),
+    
+            "state": Column(pa.String, nullable=False,
+                checks=[Check.isin(allowed_states),
+                        Check.str_length(min_value=1)]),
+    
+            "pets_allowed": Column(pa.String, nullable=True,
+                checks=[Check.isin(allowed_pets)]),
+    
+            "fee": Column(pa.String, nullable=True,
+                checks=[Check.isin(allowed_fee)]),
+    
+            "has_photo": Column(pa.String, nullable=False,
+                checks=[Check.isin(allowed_has_photo)]),
+    
+            "state_median_price": Column(pa.Float, nullable=False,
+                checks=[Check.greater_than(0),
+                        Check(lambda s: s.isna().mean() <= 0.05)]),
+    
+            "high_price": Column(pa.Int, nullable=False,
+                checks=[Check.isin([0, 1])]),
+        },
+    
+        checks=[
+            Check(lambda df: df.duplicated().sum() == 0, error="Duplicate rows detected"),
+            Check(lambda df: ~df.isna().all(axis=1)),
+            Check(check_no_outliers, error="Outliers detected in numeric columns."),
+            Check(check_categories, error="Unexpected categorical values."),
+            Check(check_target_distribution, error="Target variable distribution is anomalous"),
+            Check(check_corr_target, error="Anomalous correlation between target and features."),
+            Check(check_corr_feats, error="Anomalous correlation between features")
+        ])
+    
+    try:
+        validated_df = schema.validate(df_subset, lazy=True)
+        print("All checks passed!")
+    except pa.errors.SchemaErrors as e:
+        print("Some checks failed:")
+        print(e.failure_cases)
+    
+    # Splitting data 
+    numeric_features = ["square_feet", "bathrooms"]
+    categorical_features = ["bedrooms", "state", "pets_allowed", "fee", "has_photo"]
+    
+    model_df = df_subset[numeric_features + categorical_features + ["high_price"]].copy()
+    
+    X = model_df[numeric_features + categorical_features]
+    y = model_df["high_price"]
+    
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, stratify=y, random_state=123
+    )
+    
+    # Saving cleaned and processed data
+    X_train.to_csv("results/X_train.csv", index=False)
+    X_test.to_csv("results/X_test.csv", index=False)
+    y_train.to_csv("results/y_train.csv", index=False)
+    y_test.to_csv("results/y_test.csv", index=False)
+    df_subset.to_csv("results/full_cleaned_data.csv", index=False)
+    print("Data cleaning and processing complete! Files saved in the results folder.")
+    
 if __name__ == "__main__":
     main()
