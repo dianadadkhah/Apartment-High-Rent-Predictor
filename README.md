@@ -19,7 +19,12 @@ Our logistic regression model got an accuracy of approximately 70 percent with p
 1. Clone the repository
 2. Create the conda environment using the provided environment.yml file
 3. Activate the environment
-4. Navigate to the root of this project on your computer using the command line and enter the following command:
+   
+Create the conda environment using:
+- conda env create -f environment.yml
+- to activate it: conda activate Group_26
+   
+5. Navigate to the root of this project on your computer using the command line and enter the following command:
    
 ``` 
 docker compose up
@@ -39,8 +44,8 @@ python src/03_eda.py results/full_cleaned_data.csv results
 
 python src/04_model.py results/[INSERT INPUT FILE NAME] results
 
-quarto render report/breast_cancer_predictor_report.qmd --to html
-quarto render report/breast_cancer_predictor_report.qmd --to pdf
+quarto render notebooks/apartment_pricing_ml_analysis.qmd --to html
+quarto render notebooks/apartment_pricing_ml_analysis.qmd --to pdf
 ```
 ### Clean up
 
