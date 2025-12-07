@@ -12,7 +12,10 @@ dependencies:
   - matplotlib=3.8.4
   - seaborn=0.13.2
   - jupyterlab=4.2.5
-  - click=8.1.7                         
+  - click=8.1.7
   - pip
   - pip:
       - pandera==0.20.3
+      - ucimlrepo
+      - pointblank
+
