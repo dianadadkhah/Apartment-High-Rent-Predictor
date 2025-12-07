@@ -4,7 +4,7 @@ channels:
   - defaults
 
 dependencies:
-  - python=3.12
+  - python=3.11
   - numpy=1.26.4
   - pandas=2.2.2
   - scikit-learn=1.4.2
@@ -12,8 +12,7 @@ dependencies:
   - matplotlib=3.8.4
   - seaborn=0.13.2
   - jupyterlab=4.2.5
-  - click=8.1.7              
-  - quarto=1.4.550           
+  - click=8.1.7                         
   - pip
   - pip:
       - pandera==0.20.3

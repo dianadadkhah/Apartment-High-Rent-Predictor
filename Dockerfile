@@ -4,18 +4,23 @@ USER root
 
 WORKDIR /home/jovyan/work
 
-# Install micromamba manually
-RUN apt-get update && apt-get install -y curl bzip2 && \
-    curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj -C /usr/local/bin --strip-components=1 bin/micromamba && \
-    chmod +x /usr/local/bin/micromamba
+# Install mamba (fast solver)
+RUN conda install -n base -c conda-forge mamba && \
+    conda clean --all -y
 
-# Copy environment files
+# Install Quarto for ARM64 (M1/M2 Macs + ARM Docker)
+RUN apt-get update && \
+    apt-get install -y wget && \
+    wget https://quarto.org/download/latest/quarto-linux-arm64.deb && \
+    apt-get install -y ./quarto-linux-arm64.deb && \
+    rm quarto-linux-arm64.deb
+
+# Copy environment file
 COPY environment.yml .
-COPY conda-lock.yml .
 
-# Use micromamba to install exact conda-lock environment
-RUN micromamba install -y -n base -f conda-lock.yml && \
-    micromamba clean --all --yes
+# Install pinned environment (Python, pandas, sklearn, etc.)
+RUN mamba env update -n base -f environment.yml && \
+    conda clean --all -y
 
 USER ${NB_UID}
 
