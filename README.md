@@ -37,7 +37,8 @@ python src/02_clean.py results/data.csv results
 
 python src/03_eda.py results/full_cleaned_data.csv results
 
-python src/04_model.py results/[INSERT INPUT FILE NAME] results
+python src/04_model.py results/X_train.csv results/X_test.csv results/y_train.csv results/y_test.csv results
+
 
 quarto render notebooks/apartment_pricing_ml_analysis.qmd --to html
 quarto render notebooks/apartment_pricing_ml_analysis.qmd --to pdf
