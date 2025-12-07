@@ -43,6 +43,10 @@ python src/02_clean.py results/data.csv results
 python src/03_eda.py results/full_cleaned_data.csv results
 
 python src/04_model.py results/full_cleaned_data.csv results
+<<<<<<< HEAD
+
+=======
+>>>>>>> cdb13816319c75eb14759e4662b0c009b77eabe0
 
 quarto render notebooks/apartment_pricing_ml_analysis.qmd --to html
 quarto render notebooks/apartment_pricing_ml_analysis.qmd --to pdf
