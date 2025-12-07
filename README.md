@@ -12,7 +12,7 @@ Contributors / Authors
 This project investigates whether a machine learning model can accurately predict if an apartment in the U.S. is high-priced relative to the median rent within its state. The model leverages features such as location, size, and the number of bedrooms and bathrooms to make these predictions. With rental affordability becoming an increasingly important issue in America, we were interested in understanding how rental prices vary across states and how this variation affects the ability of renters, landlords, and policymakers to identify what determines a “high-priced” apartment in a given area.
 
 ## Findings Summary and Limitations 
-Our logistic regression model got an accuracy of approximately 70 percent with precision and recall around 0.72 and 0.66 indicating that the model performs reasonably well at identifying high-priced apartment listings relative to each state median rent. However, there are some limitations, the model still misclassifies many high-priced listings, suggesting that additional features ( such as neighborhood characteristics or text-based listing information) and more advanced models could further improve performance.
+Our logistic regression model got an accuracy of approximately 70 percent with precision and recall around 0.72 and 0.66 indicating that the model performs reasonably well at identifying high-priced apartment listings relative to each state median rent. However, there are some limitations, the model still misclassifies many high-priced listings, suggesting that additional features (such as neighborhood characteristics or text-based listing information) and more advanced models could further improve performance.
 
 ## How to Run the Data Analysis
 
@@ -25,9 +25,8 @@ Our logistic regression model got an accuracy of approximately 70 percent with p
 docker compose up
 ```
 
-In the terminal, look for a URL that starts with 
-`http://127.0.0.1:8888/lab?token=` 
-Copy and paste that URL into your browser.
+Copy and paste this URL into your browser: 
+`http://127.0.0.1:8888/lab?token=mds522` 
 
 To run the analysis, open a terminal and run the following commands:
 
@@ -43,7 +42,6 @@ python src/04_model.py results/[INSERT INPUT FILE NAME] results
 quarto render report/breast_cancer_predictor_report.qmd --to html
 quarto render report/breast_cancer_predictor_report.qmd --to pdf
 ```
-
 ### Clean up
 
 To shut down the container and clean up the resources, 
