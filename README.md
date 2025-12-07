@@ -32,6 +32,7 @@ docker compose up
 ```
 
 Copy and paste this URL into your browser: `http://127.0.0.1:8888/lab?token=mds522`
+Run conda activate Group_26 in terminal to ensure the environment has been activated. 
 
 To run the analysis, open a terminal and run the following commands:
 
@@ -43,10 +44,6 @@ python src/02_clean.py results/data.csv results
 python src/03_eda.py results/full_cleaned_data.csv results
 
 python src/04_model.py results/full_cleaned_data.csv results
-<<<<<<< HEAD
-
-=======
->>>>>>> cdb13816319c75eb14759e4662b0c009b77eabe0
 
 quarto render notebooks/apartment_pricing_ml_analysis.qmd --to html
 quarto render notebooks/apartment_pricing_ml_analysis.qmd --to pdf
