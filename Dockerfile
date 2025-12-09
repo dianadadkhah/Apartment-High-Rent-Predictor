@@ -9,11 +9,11 @@ RUN conda install -n base -c conda-forge -y mamba conda-lock && \
     conda clean --all -y
 
 # Install Quarto for ARM64
-RUN apt-get update && \
-    apt-get install -y wget && \
-    wget https://quarto.org/download/latest/quarto-linux-arm64.deb && \
-    apt-get install -y ./quarto-linux-arm64.deb && \
-    rm quarto-linux-arm64.deb
+RUN apt-get update && apt-get install -y wget && \
+    ARCH="$(dpkg --print-architecture)" && \
+    wget "https://quarto.org/download/latest/quarto-linux-${ARCH}.deb" && \
+    apt-get install -y "./quarto-linux-${ARCH}.deb" && \
+    rm "quarto-linux-${ARCH}.deb"
 
 # Copy environment + lock file
 COPY environment.yml .
