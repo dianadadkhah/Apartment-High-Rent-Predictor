@@ -62,15 +62,15 @@ def main(input_data, output):
         "F1-score": f1_score(y_test, y_pred)
     }
     df_metrics = pd.DataFrame(metrics, index=["Logistic Regression"])
-    df_metrics.to_csv(f"{output}/logistic_regression_metrics.csv", index=True)
+    df_metrics.to_csv("results/models/logistic_regression_metrics.csv", index=True)
     print(f"[INFO] Metrics saved to: {output}/logistic_regression_metrics.csv")
     
     # Confusion matrix
     ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
     plt.title("Figure 3: Confusion Matrix")
-    plt.savefig(f"{output}/confusion_matrix.png", dpi=300, bbox_inches="tight")
+    plt.savefig("results/figures/confusion_matrix.png", dpi=300, bbox_inches="tight")
     plt.close()
-    print(f"[INFO] Confusion matrix saved to: {output}/confusion_matrix.png")
+    print(f"[INFO] Confusion matrix saved to: results/figures/confusion_matrix.png")
 
 if __name__ == "__main__":
     main()

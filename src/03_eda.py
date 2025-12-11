@@ -16,11 +16,11 @@ def main(input_data, output):
 
     # Descriptive Stats:
     desc = df_subset[["price", "square_feet", "bathrooms"]].describe()
-    desc.to_csv("results/describe.csv")
+    desc.to_csv("results/tables/describe.csv")
 
     # Target Count: 
     target_count = df_subset["high_price"].value_counts(normalize=True)
-    target_count.to_csv("results/value_counts.csv")
+    target_count.to_csv("results/tables/target_counts.csv")
 
     # Figure 1: Distribution of Rental Prices
     plt.figure(figsize=(8,5))
@@ -28,7 +28,7 @@ def main(input_data, output):
     plt.xlim(0, df_subset["price"].quantile(0.99))
     plt.title("Figure 1: Distribution of Rental Prices")
 
-    plt.savefig("results/hist_price.png")
+    plt.savefig("results/figures/hist_price.png")
     plt.close()
 
     # Figure 2: Scatterplot of Size vs. Price 
@@ -47,7 +47,7 @@ def main(input_data, output):
     plt.ylim(0, sample_df["price"].quantile(0.99))
     plt.title("Figure 2: Size vs Price (Colored by High-Price Label)")
 
-    plt.savefig("results/scatter.png")
+    plt.savefig("results/figures/scatter.png")
     plt.close()
 
     click.echo("EDA complete! Files saved in the results folder.")

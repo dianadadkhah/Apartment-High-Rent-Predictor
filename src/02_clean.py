@@ -208,11 +208,11 @@ def main(input_data, output):
     )
     
     # Saving cleaned and processed data
-    X_train.to_csv("results/X_train.csv", index=False)
-    X_test.to_csv("results/X_test.csv", index=False)
-    y_train.to_csv("results/y_train.csv", index=False)
-    y_test.to_csv("results/y_test.csv", index=False)
-    df_subset.to_csv("results/full_cleaned_data.csv", index=False)
+    X_train.to_csv("data/processed/X_train.csv", index=False)
+    X_test.to_csv("data/processed/X_test.csv", index=False)
+    y_train.to_csv("data/processed/y_train.csv", index=False)
+    y_test.to_csv("data/processed/y_test.csv", index=False)
+    df_subset.to_csv("data/processed/full_cleaned_data.csv", index=False)
     print("Data cleaning and processing complete! Files saved in the results folder.")
     
 if __name__ == "__main__":
