@@ -36,14 +36,18 @@ Copy and paste this URL into your browser: `http://127.0.0.1:8888/lab?token=mds5
 To run the analysis, open a terminal and run the following commands:
 
 ```         
-python src/01_download.py
-
-python src/02_clean.py results/data.csv results
-
-python src/03_eda.py results/full_cleaned_data.csv results
-
-python src/04_model.py results/full_cleaned_data.csv results
-
+python src/01_download.py data/raw/data.csv
+```
+```
+python src/02_clean.py data/raw/data.csv data/processed
+```
+```
+python src/03_eda.py data/processed/full_cleaned_data.csv results
+```
+```
+python src/04_model.py data/processed/full_cleaned_data.csv results
+```
+```
 quarto render notebooks/apartment_pricing_ml_analysis.qmd --to html
 quarto render notebooks/apartment_pricing_ml_analysis.qmd --to pdf
 ```
