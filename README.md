@@ -1,6 +1,6 @@
 ### Apartment High-Rent Predictor
 
-Contributors / Authors
+### Contributors / Authors
 
 Diana Dadkhah Tirani
 
