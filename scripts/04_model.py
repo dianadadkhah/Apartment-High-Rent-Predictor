@@ -7,6 +7,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, ConfusionMatrixDisplay
 from sklearn.pipeline import Pipeline
+from metrics import classification_metrics
 
 @click.command()
 @click.argument("input_data", type=str)
@@ -55,16 +56,9 @@ def main(input_data, output):
     y_pred = pipeline.predict(X_test)
     
     # Metrics
-    metrics = {
-        "Accuracy": accuracy_score(y_test, y_pred),
-        "Precision": precision_score(y_test, y_pred),
-        "Recall": recall_score(y_test, y_pred),
-        "F1-score": f1_score(y_test, y_pred)
-    }
-    df_metrics = pd.DataFrame(metrics, index=["Logistic Regression"])
-    df_metrics.to_csv("results/models/logistic_regression_metrics.csv", index=True)
-    print(f"[INFO] Metrics saved to: {output}/logistic_regression_metrics.csv")
-    
+    df_metrics = classification_metrics(y_test, y_pred, "Logistic Regression",
+    output_path=f"{output}/tables/logistic_regression_metrics.csv")
+
     # Confusion matrix
     ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
     plt.title("Figure 3: Confusion Matrix")
