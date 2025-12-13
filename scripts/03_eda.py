@@ -2,6 +2,7 @@ import click
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from scatterplot import scatterplot_squarefeet_price
 
 @click.command()
 @click.argument("input_data", type=str)
@@ -26,29 +27,15 @@ def main(input_data, output):
     plt.figure(figsize=(8,5))
     sns.histplot(df_subset["price"], bins=50)
     plt.xlim(0, df_subset["price"].quantile(0.99))
-    plt.title("Figure 1: Distribution of Rental Prices")
+    plt.xlabel("Price (USD)")
+    plt.ylabel("Frequency")
+    plt.title("Distribution of Rental Prices")
 
     plt.savefig("results/figures/hist_price.png")
     plt.close()
 
-    # Figure 2: Scatterplot of Size vs. Price 
-    sample_df = df_subset.sample(
-        n=min(5000, len(df_subset)),
-        random_state=123)
-
-    plt.figure(figsize=(8,6))
-    sns.scatterplot(
-        data=sample_df,
-        x="square_feet",
-        y="price",
-        hue="high_price",
-        alpha=0.4)
-    plt.xlim(0, sample_df["square_feet"].quantile(0.99))
-    plt.ylim(0, sample_df["price"].quantile(0.99))
-    plt.title("Figure 2: Size vs Price (Colored by High-Price Label)")
-
-    plt.savefig("results/figures/scatter.png")
-    plt.close()
+    # Figure 2: Scatterplot of Size vs. Price
+    scatterplot_squarefeet_price(df_subset, f"{output}/figures/scatter.png")
 
     click.echo("EDA complete! Files saved in the results folder.")
 
