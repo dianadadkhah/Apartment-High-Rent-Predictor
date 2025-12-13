@@ -20,77 +20,72 @@ Our logistic regression model achieved an accuracy of approximately 70 percent, 
 
 ### How to Run the Data Analysis
 
-Clone the repository
+1. Clone the repository
 
-Create the conda environment using the provided environment.yml file
+2. Create the conda environment using the provided environment.yml file
 
-Activate the environment
+3. Activate the environment: 
 
-Create the conda environment using:
-
-conda env create -f environment.yml
-
-To activate it: conda activate Group_26
-
-Register the environment as a Jupyter/Quarto kernel (required for Quarto rendering):
-
+- Create the conda environment using: conda env create -f environment.yml
+- To activate it: conda activate Group_26
+- Register the environment as a Jupyter/Quarto kernel (required for Quarto rendering):
+```
 python -m ipykernel install --user --name group_26 --display-name "Python (group_26)"
-
-
-Navigate to the root of this project on your computer using the command line.
-
-To run the entire analysis pipeline (data download, cleaning, EDA, modeling, and report generation), run:
-
+```
+4. Navigate to the root of this project on your computer using the command line.
+5. To run the entire analysis pipeline (data download, cleaning, EDA, modeling, and report generation), run:
+```
 make all
+```
 
-
-To run the unit tests for reusable functions:
-
+6. To run the unit tests for reusable functions:
+```
 make test
+```
 
-
-To remove all generated data, figures, models, and reports:
-
+7. To remove all generated data, figures, models, and reports:
+```
 make clean
-
+```
 ### Dependencies
 
- This project uses the following software dependencies, all of which are specified in the environment.yml file:
+This project uses the following software dependencies, all of which are specified in the environment.yml file:
 
-Python 3.11
+- Python 3.11
 
-numpy 1.26.4
+- numpy 1.26.4
 
-pandas 2.2.2
+- pandas 2.2.2
 
-scikit-learn 1.4.2
+- scikit-learn 1.4.2
 
-altair 5.3.0
+- altair 5.3.0
 
-matplotlib 3.8.4
+- matplotlib 3.8.4
 
-seaborn 0.13.2
+- seaborn 0.13.2
 
-jupyterlab 4.2.5
+- jupyterlab 4.2.5
 
-click 8.1.7
+- click 8.1.7
 
-pytest
+- pytest
 
-pandera 0.20.3 (installed via pip)
+- pandera 0.20.3 (installed via pip)
 
-ucimlrepo
+- ucimlrepo
 
-pointblank
+- pointblank
 
 To install all dependencies, create the conda environment using:
-
+```
 conda env create -f environment.yml
 
 conda activate Group_26
+```
 
 ### License(s)
 
- This project contains the following license(s):
+This project contains the following license(s):
 
 MIT License
