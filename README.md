@@ -2,13 +2,13 @@
 
 ### Contributors / Authors
 
-Diana Dadkhah Tirani
+Diana Dadkhah Tirani - UBC Vancouver, Master of Data Science Students
 
-Shanze Khemani
+Shanze Khemani - UBC Vancouver, Master of Data Science Students
 
-Ssemakula Peter Wasswa
+Ssemakula Peter Wasswa - UBC Vancouver, Master of Data Science Students
 
-Grigory Artazyan
+Grigory Artazyan - UBC Vancouver, Master of Data Science Students
 
 ### Project Summary
 
