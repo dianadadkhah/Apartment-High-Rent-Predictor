@@ -1,4 +1,5 @@
-PYTHON := python
+PYTHON := PYTHONPATH=. python
+
 
 RAW_DATA    := data/raw/data.csv
 CLEAN_DATA  := data/processed/full_cleaned_data.csv
