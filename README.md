@@ -22,28 +22,26 @@ Our logistic regression model achieved an accuracy of approximately 70 percent, 
 
 1. Clone the repository
 
-2. Create the conda environment using the provided environment.yml file
+2. Create and ctivate the conda environment: 
 
-3. Activate the environment: 
-
-- Create the conda environment using: conda env create -f environment.yml
+- Create the conda environment using the provided environment.yml file: conda env create -f environment.yml
 - To activate it: conda activate Group_26
 - Register the environment as a Jupyter/Quarto kernel (required for Quarto rendering):
 ```
 python -m ipykernel install --user --name group_26 --display-name "Python (group_26)"
 ```
-4. Navigate to the root of this project on your computer using the command line.
-5. To run the entire analysis pipeline (data download, cleaning, EDA, modeling, and report generation), run:
+3. Navigate to the root of this project on your computer using the command line.
+4. To run the entire analysis pipeline (data download, cleaning, EDA, modeling, and report generation), run:
 ```
 make all
 ```
 
-6. To run the unit tests for reusable functions:
+5. To run the unit tests for reusable functions:
 ```
 make test
 ```
 
-7. To remove all generated data, figures, models, and reports:
+6. To remove all generated data, figures, models, and reports:
 ```
 make clean
 ```
