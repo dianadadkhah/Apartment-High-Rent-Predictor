@@ -1,1 +1,1 @@
-echo ".ipynb_checkpoints/" >> .gitignore
+echo ".ipynb_checkpoints/" >> .gitignorereports/apartment_pricing_ml_analysis.html
