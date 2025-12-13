@@ -26,32 +26,8 @@ execute:
 
 
 ```{python}
-#| scrolled: true
-#| vscode: {languageId: r}
-# Install needed packages if not available
-#!pip install ucimlrepo seaborn scikit-learn
-
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import pandera as pa
 
-from ucimlrepo import fetch_ucirepo
-from pandera import Column, Check, DataFrameSchema
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import (
-    accuracy_score, precision_score, recall_score,
-    f1_score, ConfusionMatrixDisplay
-)
-
-
-sns.set(style="whitegrid")
-plt.rcParams["figure.figsize"] = (8, 5)
 ```
 
 ## **Summary**
@@ -59,6 +35,7 @@ plt.rcParams["figure.figsize"] = (8, 5)
 This project investigates whether it is possible to predict when an apartment listing in the United States is **high-priced relative to other listings in the same state**. Using the *Apartment for Rent Classified* dataset from the UCI Machine Learning Repository, we defined a binary target indicating whether each listing's price was above the state-level median. We developed a logistic regression model to classify listings as either high-priced or not. The final classifier achieved an accuracy of 0.7 on unseen data, indicating that it correctly predicts a listing as high-priced in most cases. 
 
 The notebook includes:
+
 - Data loading from the web  
 - Data cleaning and wrangling  
 - Exploratory data analysis  
@@ -79,6 +56,7 @@ Can a machine learning algorithm accurately predict whether an apartment listing
 ## Dataset
 
 We use the **Apartment for Rent Classified** dataset from the UCI Machine Learning Repository. The dataset contains:
+
 - 10,000+ apartment listings  
 - Structural and listing details  
 - Geographic information  
@@ -97,240 +75,52 @@ We prepared the dataset by:
 4. Creating a binary target variable `high_price`
 
 ```{python}
-#| vscode: {languageId: r}
-# Load dataset directly from the UCI ML Repository
-apartment_ds = fetch_ucirepo(id=555)
+#| label: tbl-raw-data
+#| tbl-cap: Preview of the apartment rental listings dataset showing key attributes such as listing ID, title and description, amenities, number of bathrooms and bedrooms, price, square footage, location (city, state, latitude, longitude), data source, and posting time. The table illustrates the structure and diversity of features used for exploratory analysis and modeling.
+raw_data_table = pd.read_csv("../data/raw/data.csv")
+raw_data_table
+```
 
-df = apartment_ds.data.original.copy()
 
-df.head()
+```{python}
+
+#| label: tbl-cleaned-dataset
+#| tbl-cap: Cleaned and feature-engineered apartment listings used for modeling. The table includes selected numerical and categorical predictors (price, square footage, bathrooms, bedrooms, state, pet policy, fee status, and photo availability) after removing missing, non-positive, and duplicate records. A state-level median price is computed and used to derive the binary target variable high_price, indicating whether a listing is priced above the median for its state.
+cleaned_dataset_table = pd.read_csv("../data/processed/full_cleaned_data.csv")
+cleaned_dataset_table
 ```
 
 ```{python}
-#| vscode: {languageId: r}
-cols_needed = [
-    "price", "square_feet", "bathrooms", "bedrooms",
-    "state", "pets_allowed", "fee", "has_photo"
-]
-
-df_subset = df[cols_needed].copy()
-
-# Convert price and square_feet to numeric (coerce invalid values to NaN)
-df_subset["price"] = pd.to_numeric(df_subset["price"], errors="coerce")
-df_subset["square_feet"] = pd.to_numeric(df_subset["square_feet"], errors="coerce")
-
-# Also convert bathrooms and bedrooms to numeric
-df_subset["bathrooms"] = pd.to_numeric(df_subset["bathrooms"], errors="coerce")
-df_subset["bedrooms"] = pd.to_numeric(df_subset["bedrooms"], errors="coerce")
-
-# Remove non-positive or missing price/square_feet
-df_subset = df_subset[
-    (df_subset["price"] > 0) &
-    (df_subset["square_feet"] > 0)
-]
-
-# Drop rows with missing values in other key areas
-df_subset = df_subset.dropna(subset=cols_needed)
-
-# Compute median price per state
-state_medians = df_subset.groupby("state")["price"].median()
-df_subset["state_median_price"] = df_subset["state"].map(state_medians)
-
-# Remove duplicates 
-df_subset = df_subset.drop_duplicates().reset_index(drop=True)
-
-# Create binary target
-df_subset["high_price"] = (df_subset["price"] > df_subset["state_median_price"]).astype(int)
-
-df_subset.head()
+#| label: tbl-X-train-dataset
+#| tbl-cap: Training feature matrix (X_train) obtained after performing the train–test split. This dataset contains only the predictor variables used to train the model, with all preprocessing steps applied.
+#| 
+X_train_set = pd.read_csv("../data/processed/X_train.csv")
+X_train_set 
+```
+```{python}
+#| label: tbl-y-train-dataset
+#| tbl-cap: Training target vector (y_train) obtained after the train–test split. This table contains the binary response variable indicating whether an apartment listing is classified as high-priced based on the state-level median price.
+#| 
+y_train_set = pd.read_csv("../data/processed/y_train.csv")
+y_train_set 
+```
+```{python}
+#| label: tbl-X-test-dataset
+#| tbl-cap: Test feature matrix (X_test) obtained after performing the train–test split. This dataset contains the predictor variables used to evaluate the trained model, with all preprocessing steps applied.
+#| 
+X_test_set = pd.read_csv("../data/processed/X_test.csv")
+X_test_set
 ```
 
 ```{python}
-#| vscode: {languageId: r}
-# Data Validation Checks
-
-numeric_cols = ["price", "square_feet", "bathrooms", "bedrooms", "state_median_price"]
-
-target = "high_price"
-threshold = 0.9  # correlation threshold
-
-allowed_states = [
-    'CA','VA','NM','CO','WV','WA','TX','IL','MS','OR','FL','MO','PA','IA',
-    'WI','NC','GA','OK','RI','NJ','IN','MD','OH','ND','NE','DC','AZ','MA',
-    'MI','SC','ID','MN','KS','TN','UT','KY','SD','LA','AK','AR','AL','CT',
-    'NY','NV','HI','WY','VT','NH','MT','DE','ME'
-]
-
-allowed_pets = ['Cats', 'Cats,Dogs', 'Dogs', 'Cats,Dogs,None']
-allowed_fee = ['No', 'Yes']
-allowed_has_photo = ['Thumbnail', 'Yes', 'No']
-
-def check_no_outliers(df):
-    has_outliers = False  
-
-    for col in numeric_cols:
-        q1 = df[col].quantile(0.25)
-        q3 = df[col].quantile(0.75)
-        iqr = q3 - q1
-        lower = q1 - 1.5 * iqr
-        upper = q3 + 1.5 * iqr
-        
-        outliers = df[(df[col] < lower) | (df[col] > upper)]
-        if not outliers.empty:
-            has_outliers = True
-            print(f"Outliers detected in column '{col}':")
-            print(outliers[[col]])
-            print("-"*40)
-    
-    return not has_outliers  # True if no outliers, False otherwise
-
-def check_categories(df):
-    invalid_found = False  # track if any invalid category exists
-    
-    category_mapping = {
-        "state": allowed_states,
-        "pets_allowed": allowed_pets,
-        "fee": allowed_fee,
-        "has_photo": allowed_has_photo
-    }
-    
-    for col, allowed in category_mapping.items():
-        invalid_rows = df[~df[col].isin(allowed)]
-        if not invalid_rows.empty:
-            invalid_found = True
-            print(f"Unexpected values in column '{col}':")
-            print(invalid_rows[[col]])
-            print("-"*40)
-    
-    return not invalid_found  # True if all categories valid, False otherwise
-
-def check_target_distribution(df):
-    # Only 0 or 1 allowed
-    unique_vals = set(df["high_price"].unique())
-    if not unique_vals.issubset({0, 1}):
-        print(f"Unexpected target values found: {unique_vals}")
-        return False
-    
-    # Check class balance
-    ratio = df["high_price"].mean()  # proportion of 1s
-    if ratio <= 0.05 or ratio >= 0.95:
-        print(f"Target distribution is extremely imbalanced: {ratio:.2f} proportion of 1s")
-        return False
-    
-    return True
-
-result = check_target_distribution(df_subset)
-print("Target distribution check passed?", result)
-
-def check_corr_target(df):
-    corr = df[numeric_cols + [target]].corr()[target].drop(target)
-    return (abs(corr) < threshold).all()
-
-def check_corr_feats(df):
-    for i in range(len(numeric_cols)):
-        for j in range(i + 1, len(numeric_cols)):
-            corr = df[numeric_cols[i]].corr(df[numeric_cols[j]])
-            if abs(corr) >= threshold:
-                return False
-    return True
-
-schema = DataFrameSchema(
-    {
-        "price": Column(pa.Float, nullable=False,
-            checks=[Check.greater_than(0),
-                    Check(lambda s: s.isna().mean() <= 0.05)]),
-
-        "square_feet": Column(pa.Float, nullable=False,
-            checks=[Check.greater_than(0),
-                    Check(lambda s: s.isna().mean() <= 0.05)]),
-
-        "bathrooms": Column(pa.Float, nullable=False,
-            checks=[Check.greater_than_or_equal_to(0),
-                    Check(lambda s: s.isna().mean() <= 0.05)]),
-
-        "bedrooms": Column(pa.Float, nullable=False,
-            checks=[Check.greater_than_or_equal_to(0),
-                    Check(lambda s: s.isna().mean() <= 0.05)]),
-
-        "state": Column(pa.String, nullable=False,
-            checks=[Check.isin(allowed_states),
-                    Check.str_length(min_value=1)]),
-
-        "pets_allowed": Column(pa.String, nullable=True,
-            checks=[Check.isin(allowed_pets)]),
-
-        "fee": Column(pa.String, nullable=True,
-            checks=[Check.isin(allowed_fee)]),
-
-        "has_photo": Column(pa.String, nullable=False,
-            checks=[Check.isin(allowed_has_photo)]),
-
-        "state_median_price": Column(pa.Float, nullable=False,
-            checks=[Check.greater_than(0),
-                    Check(lambda s: s.isna().mean() <= 0.05)]),
-
-        "high_price": Column(pa.Int, nullable=False,
-            checks=[Check.isin([0, 1])]),
-    },
-
-    checks=[
-        Check(lambda df: df.duplicated().sum() == 0, error="Duplicate rows detected"),
-        Check(lambda df: ~df.isna().all(axis=1)),
-        Check(check_no_outliers, error="Outliers detected in numeric columns."),
-        Check(check_categories, error="Unexpected categorical values."),
-        Check(check_target_distribution, error="Target variable distribution is anomalous"),
-        Check(check_corr_target, error="Anomalous correlation between target and features."),
-        Check(check_corr_feats, error="Anomalous correlation between features")
-    ])
-
-try:
-    validated_df = schema.validate(df_subset, lazy=True)
-    print("All checks passed!")
-except pa.errors.SchemaErrors as e:
-    print("Some checks failed:")
-    print(e.failure_cases)
+#| label: tbl-y-test-dataset
+#| tbl-cap: Test target vector (y_test) obtained after the train–test split. This table contains the true binary labels used to evaluate the model’s predictive performance.
+#| 
+y_test_set = pd.read_csv("../data/processed/y_test.csv")
+y_test_set
 ```
 
-```{python}
-#| vscode: {languageId: r}
-# Splitting data 
 
-numeric_features = ["square_feet", "bathrooms"]
-categorical_features = ["bedrooms", "state", "pets_allowed", "fee", "has_photo"]
-
-model_df = df_subset[numeric_features + categorical_features + ["high_price"]].copy()
-
-X = model_df[numeric_features + categorical_features]
-y = model_df["high_price"]
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, stratify=y, random_state=123
-)
-
-(len(X_train), len(X_test))
-```
-
-```{python}
-#| vscode: {languageId: r}
-# Preprocessing data 
-
-numeric_transformer = "passthrough"
-categorical_transformer = OneHotEncoder(handle_unknown="ignore")
-
-preprocessor = ColumnTransformer(
-    transformers=[
-        ("num", numeric_transformer, numeric_features),
-        ("cat", categorical_transformer, categorical_features)
-    ]
-)
-
-model = Pipeline(
-    steps=[
-        ("preprocessing", preprocessor),
-        ("classifier", LogisticRegression(max_iter=1000))
-    ]
-)
-```
 
 # Exploratory Data Analysis (EDA)
 
@@ -342,49 +132,37 @@ We explored:
 - Relationship between size and price  
 
 ```{python}
-#| vscode: {languageId: r}
-df_subset[["price", "square_feet", "bathrooms"]].describe()
+#| label: tbl-describe
+#| tbl-cap: Summary statistics for apartment listings, including price, square footage, and number of bathrooms. The table reports the count, central tendency (mean and median), dispersion (standard deviation and interquartile range), and extrema, providing an overview of the scale and variability of key features in the dataset.
+describe_table = pd.read_csv("../results/tables/describe.csv")
+describe_table
 ```
+
 
 ```{python}
 #| vscode: {languageId: r}
-df_subset["high_price"].value_counts(normalize=True)
+#| label: tbl-target
+#| tbl-cap: Class distribution of the binary target variable (high_price). Approximately 51.1% of listings are labeled as high-priced (1), while 48.9% are labeled as not high-priced (0), indicating a nearly balanced classification problem.
+target_tbl = pd.read_csv("../results/tables/target_counts.csv")
+target_tbl 
 ```
 
-```{python}
-#| vscode: {languageId: r}
-sns.histplot(df_subset["price"], bins=50)
-plt.xlim(0, df_subset["price"].quantile(0.99))
-plt.title("Figure 1: Distribution of Rental Prices")
-plt.show()
-```
+![The histogram shows a right-skewed distribution of apartment rental prices, with most listings concentrated between approximately $800 and $1,500 and a long upper tail.](../results/figures/hist_price.png){#fig-hist width=70%}
 
-```{python}
-#| vscode: {languageId: r}
-sample_df = df_subset.sample(n=min(5000, len(df_subset)), random_state=123)
 
-sns.scatterplot(
-    data=sample_df,
-    x="square_feet",
-    y="price",
-    hue="high_price",
-    alpha=0.4
-)
-plt.xlim(0, sample_df["square_feet"].quantile(0.99))
-plt.ylim(0, sample_df["price"].quantile(0.99))
-plt.title("Figure 2: Size vs Price (Colored by High-Price Label)")
-plt.show()
-```
+![Relationship between apartment size and rental price, with points colored by the high-price label (1 = high-priced, 0 = not high-priced). Larger units generally command higher prices, though substantial overlap between the two classes highlights variability in pricing beyond square footage alone.](../results/figures/scatter.png){#fig-scatter width=70%}
 
 # Modeling: Logistic Regression Classifier
 
 We predict `high_price` using:
 
-**Numeric features**
+**Numeric features**. 
+
 - square_feet  
 - bathrooms  
 
-**Categorical features**
+**Categorical features**. 
+
 - bedrooms  
 - state  
 - pets_allowed  
@@ -394,27 +172,17 @@ We predict `high_price` using:
 We use a train-test split and a preprocessing pipeline.
 
 ```{python}
-#| vscode: {languageId: r}
-model.fit(X_train, y_train)
 
-y_pred = model.predict(X_test)
-
-metrics = {
-    "Accuracy": accuracy_score(y_test, y_pred),
-    "Precision": precision_score(y_test, y_pred),
-    "Recall": recall_score(y_test, y_pred),
-    "F1-score": f1_score(y_test, y_pred)
-}
-
-pd.DataFrame(metrics, index=["Logistic Regression"])
+#| label: tbl-logistic
+#| tbl-cap: Classification performance of the logistic regression model evaluated on the held-out test set using a train–test split and a preprocessing pipeline. Reported metrics include accuracy, precision, recall, and F1-score, summarizing the model’s overall predictive effectiveness and balance between false positives and false negatives.
+LogisticRegression_table = pd.read_csv("../results/models/logistic_regression_metrics.csv")
+LogisticRegression_table
 ```
 
-```{python}
-#| vscode: {languageId: r}
-ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
-plt.title("Figure 3: Confusion Matrix")
-plt.show()
-```
+
+
+![Confusion matrix summarizing the binary classification performance for predicting high-priced apartments. The model correctly identifies 2,610 low-priced and 2,359 high-priced units, while misclassifying 973 low-priced units as high-priced and 1,198 high-priced units as low-priced, highlighting a moderate trade-off between false positives and false negatives.](../results/figures/confusion_matrix.png){#fig-confusion width=70%}
+
 
 # Discussion
 
