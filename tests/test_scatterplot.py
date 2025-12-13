@@ -1,6 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from src.scatterplot import scatterplot_squarefeet_price
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent / "src"))
+from scatterplot import scatterplot_squarefeet_price
 
 def sample_test_df():
     return pd.DataFrame({
