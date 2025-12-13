@@ -2,7 +2,7 @@ import click
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from scatterplot import scatterplot_squarefeet_price
+from src.scatterplot import scatterplot_squarefeet_price
 
 @click.command()
 @click.argument("input_data", type=str)
