@@ -53,9 +53,9 @@ To remove all generated data, figures, models, and reports:
 
 make clean
 
-Dependencies
+### Dependencies
 
-### This project uses the following software dependencies, all of which are specified in the environment.yml file:
+ This project uses the following software dependencies, all of which are specified in the environment.yml file:
 
 Python 3.11
 
@@ -89,8 +89,8 @@ conda env create -f environment.yml
 
 conda activate Group_26
 
-License(s)
+### License(s)
 
-### This project contains the following license(s):
+ This project contains the following license(s):
 
 MIT License
