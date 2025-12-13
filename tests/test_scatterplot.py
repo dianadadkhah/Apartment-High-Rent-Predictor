@@ -19,7 +19,7 @@ def test_scatterplot_saves(tmp_path):
     output_file = tmp_path / "scatter_test.png"  
     fig = scatterplot_squarefeet_price(df, output_path=str(output_file))
     
-    assert output_file.exists(), "Scatterplot image was saved"
+    assert output_file.exists(), "Scatterplot image was saved."
     
     plt.close(fig)
 
