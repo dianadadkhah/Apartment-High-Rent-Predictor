@@ -18,11 +18,11 @@ Renamed the folder [here](reports)
 
 3. Added explanations for each plot in the EDA section to guide the reader and clarify what insights are being highlighted. This was based on feedback from Shrijaa and Sean.
 
-Commit with these changes found [here](ADD LINK)
+Commit with these changes found [here](435df58489314fe44033dafb28517c87d5b49b32)
 
 4. Added authors to the report based on feedback from Shrijaa.
 
-Commit with these changes found [here](ADD LINK)
+Commit with these changes found [here](435df58489314fe44033dafb28517c87d5b49b32)
 
 5. Added subfolders to the data/ folder to organize raw and processed data files based on feedback from Serene and Sean.
 
