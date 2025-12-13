@@ -66,7 +66,7 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="../apartment_pricing_ml_analysis.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="apartment_pricing_ml_analysis.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -96,12 +96,20 @@ ul.task-list li input[type="checkbox"] {
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary"><strong>Summary</strong></h2>
 <p>This project investigates whether it is possible to predict when an apartment listing in the United States is <strong>high-priced relative to other listings in the same state</strong>. Using the <em>Apartment for Rent Classified</em> dataset from the UCI Machine Learning Repository, we defined a binary target indicating whether each listing’s price was above the state-level median. We developed a logistic regression model to classify listings as either high-priced or not. The final classifier achieved an accuracy of 0.7 on unseen data, indicating that it correctly predicts a listing as high-priced in most cases.</p>
-<p>The notebook includes: - Data loading from the web<br>
-- Data cleaning and wrangling<br>
-- Exploratory data analysis<br>
-- Visualizations<br>
-- Classification modeling<br>
-- Results, discussion, and conclusions</p>
+<p>The notebook includes:</p>
+<ul>
+<li>Data loading from the web<br>
+</li>
+<li>Data cleaning and wrangling<br>
+</li>
+<li>Exploratory data analysis<br>
+</li>
+<li>Visualizations<br>
+</li>
+<li>Classification modeling<br>
+</li>
+<li>Results, discussion, and conclusions</li>
+</ul>
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
@@ -133,12 +141,18 @@ ul.task-list li input[type="checkbox"] {
 </li>
 <li>Creating a binary target variable <code>high_price</code></li>
 </ol>
-<div id="a43c7203" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="2">
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell" data-execution_count="2">
+<div id="tbl-raw-data" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-raw-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Preview of the apartment rental listings dataset showing key attributes such as listing ID, title and description, amenities, number of bathrooms and bedrooms, price, square footage, location (city, state, latitude, longitude), data source, and posting time. The table illustrates the structure and diversity of features used for exploratory analysis and modeling.
+</figcaption>
+<div aria-describedby="tbl-raw-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -286,19 +300,172 @@ ul.task-list li input[type="checkbox"] {
 <td>RentLingo</td>
 <td>1.577360e+09</td>
 </tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">99821</th>
+<td>5121219946</td>
+<td>housing/rent/apartment</td>
+<td>Houston - superb Apartment nearby fine dining</td>
+<td>Redefining urban living, in southeast Houston,...</td>
+<td>Gym,Parking,Patio/Deck,Playground,Storage,Wood...</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>USD</td>
+<td>No</td>
+<td>Yes</td>
+<td>...</td>
+<td>780</td>
+<td>Monthly</td>
+<td>605</td>
+<td>NaN</td>
+<td>Houston</td>
+<td>TX</td>
+<td>29.6151</td>
+<td>-95.1998</td>
+<td>RentDigs.com</td>
+<td>1.544186e+09</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">99822</th>
+<td>5121219696</td>
+<td>housing/rent/apartment</td>
+<td>The Best of the Best in the City of Jacksonvil...</td>
+<td>Courtney Manor Apartments offer the best of ev...</td>
+<td>AC,Cable or Satellite,Clubhouse,Dishwasher,Gym...</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>USD</td>
+<td>No</td>
+<td>Yes</td>
+<td>...</td>
+<td>813</td>
+<td>Monthly</td>
+<td>921</td>
+<td>NaN</td>
+<td>Jacksonville</td>
+<td>FL</td>
+<td>30.2254</td>
+<td>-81.7579</td>
+<td>RentDigs.com</td>
+<td>1.544186e+09</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">99823</th>
+<td>5121219420</td>
+<td>housing/rent/apartment</td>
+<td>A great &amp; large One BR apartment. Pet OK!</td>
+<td>Fully remodeled, new floor, kitchen cabinet, s...</td>
+<td>Garbage Disposal,Refrigerator</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>USD</td>
+<td>No</td>
+<td>Yes</td>
+<td>...</td>
+<td>1325</td>
+<td>Monthly</td>
+<td>650</td>
+<td>NaN</td>
+<td>San Diego</td>
+<td>CA</td>
+<td>32.7379</td>
+<td>-117.0914</td>
+<td>RentDigs.com</td>
+<td>1.544186e+09</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">99824</th>
+<td>5121218935</td>
+<td>housing/rent/apartment</td>
+<td>The Crest offers studio, 1, 2 &amp; Three BR homes...</td>
+<td>Amenities include a fitness facilities, swimmi...</td>
+<td>Gym,Pool</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>USD</td>
+<td>No</td>
+<td>Yes</td>
+<td>...</td>
+<td>931</td>
+<td>Monthly</td>
+<td>701</td>
+<td>NaN</td>
+<td>Huntersville</td>
+<td>NC</td>
+<td>35.4158</td>
+<td>-80.8451</td>
+<td>RentDigs.com</td>
+<td>1.544186e+09</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">99825</th>
+<td>5121218844</td>
+<td>housing/rent/apartment</td>
+<td>Large Remodeled Two BR 1. Five BA Apartment Home</td>
+<td>This is a brand new 2 Beds 1. five Bathrooms A...</td>
+<td>Gated,Parking,Wood Floors</td>
+<td>1.5</td>
+<td>2.0</td>
+<td>USD</td>
+<td>No</td>
+<td>Yes</td>
+<td>...</td>
+<td>1595</td>
+<td>Monthly</td>
+<td>900</td>
+<td>NaN</td>
+<td>San Diego</td>
+<td>CA</td>
+<td>32.7379</td>
+<td>-117.0914</td>
+<td>RentDigs.com</td>
+<td>1.544186e+09</td>
+</tr>
 </tbody>
 </table>
 
-<p>5 rows × 22 columns</p>
+<p>99826 rows × 22 columns</p>
 </div>
 </div>
 </div>
-<div id="81df2858" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="3">
-<div class="cell-output cell-output-display" data-execution_count="3">
+</figure>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<div id="tbl-cleaned-dataset" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="3">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cleaned-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Cleaned and feature-engineered apartment listings used for modeling. The table includes selected numerical and categorical predictors (price, square footage, bathrooms, bedrooms, state, pet policy, fee status, and photo availability) after removing missing, non-positive, and duplicate records. A state-level median price is computed and used to derive the binary target variable high_price, indicating whether a listing is priced above the median for its state.
+</figcaption>
+<div aria-describedby="tbl-cleaned-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -325,8 +492,8 @@ ul.task-list li input[type="checkbox"] {
 <td>Cats</td>
 <td>No</td>
 <td>Thumbnail</td>
-<td>2155.0</td>
-<td>1</td>
+<td>2195.0</td>
+<td>0</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
@@ -338,7 +505,7 @@ ul.task-list li input[type="checkbox"] {
 <td>Cats,Dogs</td>
 <td>No</td>
 <td>Thumbnail</td>
-<td>1398.0</td>
+<td>1420.0</td>
 <td>0</td>
 </tr>
 <tr class="odd">
@@ -351,7 +518,7 @@ ul.task-list li input[type="checkbox"] {
 <td>Cats,Dogs</td>
 <td>No</td>
 <td>Thumbnail</td>
-<td>2155.0</td>
+<td>2195.0</td>
 <td>0</td>
 </tr>
 <tr class="even">
@@ -380,123 +547,528 @@ ul.task-list li input[type="checkbox"] {
 <td>1012.5</td>
 <td>1</td>
 </tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">35695</th>
+<td>1314.0</td>
+<td>1000.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>NC</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Yes</td>
+<td>1126.5</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">35696</th>
+<td>685.0</td>
+<td>625.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>TX</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Yes</td>
+<td>1149.0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">35697</th>
+<td>798.0</td>
+<td>650.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>FL</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Yes</td>
+<td>1350.0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">35698</th>
+<td>1325.0</td>
+<td>650.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>CA</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Yes</td>
+<td>2195.0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">35699</th>
+<td>931.0</td>
+<td>701.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NC</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Yes</td>
+<td>1126.5</td>
+<td>0</td>
+</tr>
 </tbody>
 </table>
 
+<p>35700 rows × 10 columns</p>
 </div>
 </div>
 </div>
-<div id="07327e5e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="4">
-<div class="cell-output cell-output-stdout">
-<pre><code>Target distribution check passed? True
-Outliers detected in column 'price':
-        price
-13     3250.0
-20     4950.0
-27     3580.0
-62     3200.0
-63     3399.0
-...       ...
-35521  3140.0
-35603  2902.0
-35638  3275.0
-35649  3850.0
-35666  3002.0
+</figure>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div id="tbl-x-train-dataset" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="4">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-x-train-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Training feature matrix (X_train) obtained after performing the train–test split. This dataset contains only the predictor variables used to train the model, with all preprocessing steps applied.
+</figcaption>
+<div aria-describedby="tbl-x-train-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
 
-[1713 rows x 1 columns]
-----------------------------------------
-Outliers detected in column 'square_feet':
-       square_feet
-27          2100.0
-56          1850.0
-63          1721.0
-64          2598.0
-65          2200.0
-...            ...
-35369       2756.0
-35387       2196.0
-35392       2080.0
-35470       2160.0
-35652       1900.0
 
-[846 rows x 1 columns]
-----------------------------------------
-Outliers detected in column 'bathrooms':
-       bathrooms
-636          4.5
-748          4.0
-1014         4.0
-1314         5.0
-1324         4.5
-1452         4.0
-1547         4.0
-1574         4.0
-1692         4.0
-1812         4.0
-1835         5.0
-1840         4.0
-1876         4.0
-2029         4.0
-2130         7.0
-2180         4.0
-2740         4.5
-2870         6.0
-3064         4.0
-3439         4.0
-3470         4.0
-3747         4.0
-3789         4.0
-3796         5.0
-3936         4.5
-3951         4.0
-4150         4.0
-4247         5.0
-4261         4.0
-4393         4.0
-4466         4.0
-4506         4.0
-4520         4.5
-9431         4.0
-9836         4.0
-10836        4.5
-16376        5.0
-17168        4.0
-17977        4.0
-23571        4.0
-26986        4.0
-29979        4.0
-31518        4.0
-31682        5.0
-32450        4.0
-34767        4.5
-----------------------------------------
-Outliers detected in column 'bedrooms':
-       bedrooms
-27          4.0
-33          4.0
-62          4.0
-64          4.0
-65          4.0
-...         ...
-35387       4.0
-35392       4.0
-35407       4.0
-35436       4.0
-35470       4.0
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">square_feet</th>
+<th data-quarto-table-cell-role="th">bathrooms</th>
+<th data-quarto-table-cell-role="th">bedrooms</th>
+<th data-quarto-table-cell-role="th">state</th>
+<th data-quarto-table-cell-role="th">pets_allowed</th>
+<th data-quarto-table-cell-role="th">fee</th>
+<th data-quarto-table-cell-role="th">has_photo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1350.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>MI</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Thumbnail</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>900.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>LA</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>781.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>MA</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Thumbnail</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>738.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>TX</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Thumbnail</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>1068.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>NC</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Thumbnail</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">28555</th>
+<td>862.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>CO</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Thumbnail</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">28556</th>
+<td>995.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>TX</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">28557</th>
+<td>1030.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>WA</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Thumbnail</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">28558</th>
+<td>723.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>GA</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">28559</th>
+<td>522.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>WA</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Thumbnail</td>
+</tr>
+</tbody>
+</table>
 
-[549 rows x 1 columns]
-----------------------------------------
-Some checks failed:
-  column  failure_case index   schema_context  \
-0   None         False  None  DataFrameSchema   
-
-                                   check  check_number  
-0  Outliers detected in numeric columns.             2  </code></pre>
+<p>28560 rows × 7 columns</p>
 </div>
 </div>
-<div id="af0a5ef5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="5">
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>(28560, 7140)</code></pre>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div id="tbl-y-train-dataset" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="5">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-y-train-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Training target vector (y_train) obtained after the train–test split. This table contains the binary response variable indicating whether an apartment listing is classified as high-priced based on the state-level median price.
+</figcaption>
+<div aria-describedby="tbl-y-train-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">high_price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">28555</th>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">28556</th>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">28557</th>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">28558</th>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">28559</th>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<p>28560 rows × 1 columns</p>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div id="tbl-x-test-dataset" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="6">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-x-test-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: Test feature matrix (X_test) obtained after performing the train–test split. This dataset contains the predictor variables used to evaluate the trained model, with all preprocessing steps applied.
+</figcaption>
+<div aria-describedby="tbl-x-test-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+
+
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">square_feet</th>
+<th data-quarto-table-cell-role="th">bathrooms</th>
+<th data-quarto-table-cell-role="th">bedrooms</th>
+<th data-quarto-table-cell-role="th">state</th>
+<th data-quarto-table-cell-role="th">pets_allowed</th>
+<th data-quarto-table-cell-role="th">fee</th>
+<th data-quarto-table-cell-role="th">has_photo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>594.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>IA</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Thumbnail</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>874.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>TX</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Thumbnail</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>647.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>CA</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Thumbnail</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>1030.0</td>
+<td>2.0</td>
+<td>3.0</td>
+<td>CO</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>1180.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>MD</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7135</th>
+<td>1061.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>VA</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7136</th>
+<td>785.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NC</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7137</th>
+<td>796.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>UT</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7138</th>
+<td>800.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NE</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Thumbnail</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7139</th>
+<td>630.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>TX</td>
+<td>Cats,Dogs</td>
+<td>No</td>
+<td>Thumbnail</td>
+</tr>
+</tbody>
+</table>
+
+<p>7140 rows × 7 columns</p>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div id="tbl-y-test-dataset" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="7">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-y-test-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6: Test target vector (y_test) obtained after the train–test split. This table contains the true binary labels used to evaluate the model’s predictive performance.
+</figcaption>
+<div aria-describedby="tbl-y-test-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+
+
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">high_price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7135</th>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7136</th>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7137</th>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7138</th>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7139</th>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<p>7140 rows × 1 columns</p>
+</div>
+</div>
+</div>
+</figure>
 </div>
 </div>
 </section>
@@ -512,15 +1084,22 @@ Some checks failed:
 </li>
 <li>Relationship between size and price</li>
 </ul>
-<div id="548c0a32" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="7">
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell" data-execution_count="8">
+<div id="tbl-describe" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="8">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-describe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7: Summary statistics for apartment listings, including price, square footage, and number of bathrooms. The table reports the count, central tendency (mean and median), dispersion (standard deviation and interquartile range), and extrema, providing an overview of the scale and variability of key features in the dataset.
+</figcaption>
+<div aria-describedby="tbl-describe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="20">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
 <th data-quarto-table-cell-role="th">price</th>
 <th data-quarto-table-cell-role="th">square_feet</th>
 <th data-quarto-table-cell-role="th">bathrooms</th>
@@ -528,49 +1107,57 @@ Some checks failed:
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">0</th>
+<td>count</td>
 <td>35700.000000</td>
 <td>35700.000000</td>
 <td>35700.000000</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">1</th>
+<td>mean</td>
 <td>1487.928235</td>
 <td>940.632157</td>
 <td>1.440294</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">std</th>
+<th data-quarto-table-cell-role="th">2</th>
+<td>std</td>
 <td>722.414581</td>
 <td>338.539094</td>
 <td>0.533467</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">min</th>
+<th data-quarto-table-cell-role="th">3</th>
+<td>min</td>
 <td>285.000000</td>
 <td>200.000000</td>
 <td>1.000000</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">25%</th>
+<th data-quarto-table-cell-role="th">4</th>
+<td>25%</td>
 <td>1025.000000</td>
 <td>720.750000</td>
 <td>1.000000</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">50%</th>
+<th data-quarto-table-cell-role="th">5</th>
+<td>50%</td>
 <td>1327.000000</td>
 <td>897.000000</td>
 <td>1.000000</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">75%</th>
+<th data-quarto-table-cell-role="th">6</th>
+<td>75%</td>
 <td>1745.000000</td>
 <td>1105.000000</td>
 <td>2.000000</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">max</th>
+<th data-quarto-table-cell-role="th">7</th>
+<td>max</td>
 <td>19500.000000</td>
 <td>12000.000000</td>
 <td>7.000000</td>
@@ -581,53 +1168,107 @@ Some checks failed:
 </div>
 </div>
 </div>
-<div id="4d56289e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="8">
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>high_price
-1    0.510728
-0    0.489272
-Name: proportion, dtype: float64</code></pre>
-</div>
-</div>
-<div id="016960b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="9">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="apartment_pricing_ml_analysis_files/figure-html/cell-10-output-1.png" width="704" height="455" class="figure-img"></p>
 </figure>
 </div>
 </div>
-</div>
-<div id="07ebf1c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="10">
-<div class="cell-output cell-output-display">
+<div class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="9">
+<div id="tbl-target" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="9" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-target-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8: Class distribution of the binary target variable (high_price). Approximately 51.1% of listings are labeled as high-priced (1), while 48.9% are labeled as not high-priced (0), indicating a nearly balanced classification problem.
+</figcaption>
+<div aria-describedby="tbl-target-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="21">
 <div>
-<figure class="figure">
-<p><img src="apartment_pricing_ml_analysis_files/figure-html/cell-11-output-1.png" width="680" height="455" class="figure-img"></p>
+
+
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">high_price</th>
+<th data-quarto-table-cell-role="th">proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>0</td>
+<td>0.501765</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>1</td>
+<td>0.498235</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </figure>
 </div>
 </div>
+<div id="fig-hist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../results/figures/hist_price.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The histogram shows a right-skewed distribution of apartment rental prices, with most listings concentrated between approximately $800 and $1,500 and a long upper tail.
+</figcaption>
+</figure>
+</div>
+<div id="fig-scatter" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../results/figures/scatter.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Relationship between apartment size and rental price, with points colored by the high-price label (1 = high-priced, 0 = not high-priced). Larger units generally command higher prices, though substantial overlap between the two classes highlights variability in pricing beyond square footage alone.
+</figcaption>
+</figure>
 </div>
 </section>
 <section id="modeling-logistic-regression-classifier" class="level1">
 <h1>Modeling: Logistic Regression Classifier</h1>
 <p>We predict <code>high_price</code> using:</p>
-<p><strong>Numeric features</strong> - square_feet<br>
-- bathrooms</p>
-<p><strong>Categorical features</strong> - bedrooms<br>
-- state<br>
-- pets_allowed<br>
-- fee<br>
-- has_photo</p>
+<p><strong>Numeric features</strong>.</p>
+<ul>
+<li>square_feet<br>
+</li>
+<li>bathrooms</li>
+</ul>
+<p><strong>Categorical features</strong>.</p>
+<ul>
+<li>bedrooms<br>
+</li>
+<li>state<br>
+</li>
+<li>pets_allowed<br>
+</li>
+<li>fee<br>
+</li>
+<li>has_photo</li>
+</ul>
 <p>We use a train-test split and a preprocessing pipeline.</p>
-<div id="f25b985d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="11">
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell" data-execution_count="10">
+<div id="tbl-logistic" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="10">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-logistic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9: Classification performance of the logistic regression model evaluated on the held-out test set using a train–test split and a preprocessing pipeline. Reported metrics include accuracy, precision, recall, and F1-score, summarizing the model’s overall predictive effectiveness and balance between false positives and false negatives.
+</figcaption>
+<div aria-describedby="tbl-logistic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="22">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
 <th data-quarto-table-cell-role="th">Accuracy</th>
 <th data-quarto-table-cell-role="th">Precision</th>
 <th data-quarto-table-cell-role="th">Recall</th>
@@ -636,11 +1277,12 @@ Name: proportion, dtype: float64</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">Logistic Regression</th>
-<td>0.705182</td>
-<td>0.726898</td>
-<td>0.677269</td>
-<td>0.701207</td>
+<th data-quarto-table-cell-role="th">0</th>
+<td>Logistic Regression</td>
+<td>0.695938</td>
+<td>0.707983</td>
+<td>0.663199</td>
+<td>0.68486</td>
 </tr>
 </tbody>
 </table>
@@ -648,14 +1290,18 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="613fc2db" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="12">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="apartment_pricing_ml_analysis_files/figure-html/cell-13-output-1.png" width="523" height="455" class="figure-img"></p>
 </figure>
 </div>
 </div>
+<div id="fig-confusion" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-confusion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../results/figures/confusion_matrix.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confusion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Confusion matrix summarizing the binary classification performance for predicting high-priced apartments. The model correctly identifies 2,610 low-priced and 2,359 high-priced units, while misclassifying 973 low-priced units as high-priced and 1,198 high-priced units as low-priced, highlighting a moderate trade-off between false positives and false negatives.
+</figcaption>
+</figure>
 </div>
 </section>
 <section id="discussion" class="level1">
