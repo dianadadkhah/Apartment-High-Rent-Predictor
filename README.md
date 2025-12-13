@@ -22,7 +22,7 @@ Our logistic regression model achieved an accuracy of approximately 70 percent, 
 
 1. Clone the repository
 
-2. Create and ctivate the conda environment: 
+2. Create and activate the conda environment: 
 
 - Create the conda environment using the provided environment.yml file: conda env create -f environment.yml
 - To activate it: conda activate Group_26
