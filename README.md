@@ -1,90 +1,96 @@
-# Apartment High-Rent Predictor
+### Apartment High-Rent Predictor
 
 Contributors / Authors
 
--   Diana Dadkhah Tirani  
--   Shanze Khemani
--   Ssemakula Peter Wasswa
--   Grigory Artazyan
+Diana Dadkhah Tirani
 
-## Project Summary
+Shanze Khemani
 
-This project investigates whether a machine learning model can accurately predict if an apartment in the U.S. is high-priced relative to the median rent within its state. The model leverages features such as location, size, and the number of bedrooms and bathrooms to make these predictions. With rental affordability becoming an increasingly important issue in America, we were interested in understanding how rental prices vary across states and how this variation affects the ability of renters, landlords, and policymakers to identify what determines a “high-priced” apartment in a given area.
+Ssemakula Peter Wasswa
 
-## Findings Summary and Limitations
+Grigory Artazyan
 
-Our logistic regression model got an accuracy of approximately 70 percent with precision and recall around 0.72 and 0.66 indicating that the model performs reasonably well at identifying high-priced apartment listings relative to each state median rent. However, there are some limitations, the model still misclassifies many high-priced listings, suggesting that additional features (such as neighborhood characteristics or text-based listing information) and more advanced models could further improve performance.
+### Project Summary
 
-## How to Run the Data Analysis
+This project investigates whether a machine learning model can accurately predict if an apartment in the U.S. is high-priced relative to the median rent within its state. The model leverages features such as apartment size, number of bedrooms and bathrooms, pet policies, and location to make these predictions. With rental affordability becoming an increasingly important issue in the United States, this project aims to better understand how rental prices vary across states and what factors contribute to an apartment being classified as high-priced.
 
-1. Clone the repository
-2. Create the conda environment using the provided environment.yml file
-3. Activate the environment
-   
+### Findings Summary and Limitations
+
+Our logistic regression model achieved an accuracy of approximately 70 percent, with precision and recall values around 0.72 and 0.66, respectively. These results indicate that the model performs reasonably well at identifying high-priced apartment listings relative to each state’s median rent. However, the model still misclassifies a number of high-priced listings, suggesting that additional features (such as neighborhood-level characteristics or text-based listing information) and more advanced modeling approaches could further improve performance.
+
+### How to Run the Data Analysis
+
+Clone the repository
+
+Create the conda environment using the provided environment.yml file
+
+Activate the environment
+
 Create the conda environment using:
-- conda env create -f environment.yml
-- to activate it: conda activate Group_26
-   
-4. Navigate to the root of this project on your computer using the command line and enter the following command:
-   
-``` 
-docker compose up
-```
 
-Copy and paste this URL into your browser: `http://127.0.0.1:8888/lab?token=mds522`. Run conda activate Group_26 in terminal to ensure the environment has been activated. 
+conda env create -f environment.yml
 
-To run the analysis, open a terminal and run the following commands:
+To activate it: conda activate Group_26
 
-```         
-python src/01_download.py data/raw/data.csv
-```
-```
-python src/02_clean.py data/raw/data.csv data/processed
-```
-```
-python src/03_eda.py data/processed/full_cleaned_data.csv results
-```
-```
-python src/04_model.py data/processed/full_cleaned_data.csv results
-```
-```
-quarto render notebooks/apartment_pricing_ml_analysis.qmd --to html
-quarto render notebooks/apartment_pricing_ml_analysis.qmd --to pdf
-```
+Register the environment as a Jupyter/Quarto kernel (required for Quarto rendering):
 
-### Clean up
+python -m ipykernel install --user --name group_26 --display-name "Python (group_26)"
 
-To shut down the container and clean up the resources, type `Cntrl` + `C` in the terminal where you launched the container, and then type `docker compose rm`
 
-### Updating Docker Container Image
+Navigate to the root of this project on your computer using the command line.
 
-If the Dockerfile or environment.yml file is updated, you must rebuild the image using the following command:
+To run the entire analysis pipeline (data download, cleaning, EDA, modeling, and report generation), run:
 
-```         
-docker compose build
-```
+make all
 
-## Dependencies
 
-This project uses the following software dependencies, all of which are specified in the environment.yml file:
+To run the unit tests for reusable functions:
 
--   Python 3.11
--   numpy 1.26.4
--   pandas 2.2.2
--   scikit-learn 1.4.2
--   altair 5.3.0
--   matplotlib 3.8.4
--   seaborn 0.13.2
--   jupyterlab 4.2.5
--   click 8.1.7
--   pandera 0.20.3 (installed via pip)
--   ucimlrepo
--   pointblank
+make test
 
-To install all dependencies, create the conda environment using: 1. conda env create -f environment.yml 2. then activate it: conda activate Group_26
 
-## License(s)
+To remove all generated data, figures, models, and reports:
 
-This project contains the following license(s):
+make clean
 
--   MIT License
+Dependencies
+
+### This project uses the following software dependencies, all of which are specified in the environment.yml file:
+
+Python 3.11
+
+numpy 1.26.4
+
+pandas 2.2.2
+
+scikit-learn 1.4.2
+
+altair 5.3.0
+
+matplotlib 3.8.4
+
+seaborn 0.13.2
+
+jupyterlab 4.2.5
+
+click 8.1.7
+
+pytest
+
+pandera 0.20.3 (installed via pip)
+
+ucimlrepo
+
+pointblank
+
+To install all dependencies, create the conda environment using:
+
+conda env create -f environment.yml
+
+conda activate Group_26
+
+License(s)
+
+### This project contains the following license(s):
+
+MIT License
