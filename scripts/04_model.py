@@ -7,7 +7,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, ConfusionMatrixDisplay
 from sklearn.pipeline import Pipeline
-from metrics import classification_metrics
+from src.metrics import classification_metrics
 
 @click.command()
 @click.argument("input_data", type=str)
