@@ -69,3 +69,9 @@ clean:
 	rm -f results/models/*.csv
 	rm -f results/figures/*.png
 	rm -f $(REPORT_HTML)
+
+#Contributors / Authors
+# Diana Dadkhah Tirani - UBC Vancouver, Master of Data Science Students
+# Shanze Khemani - UBC Vancouver, Master of Data Science Students
+# Ssemakula Peter Wasswa - UBC Vancouver, Master of Data Science Students
+# Grigory Artazyan - UBC Vancouver, Master of Data Science Students
