@@ -26,7 +26,8 @@ format:
   pdf:
     toc: true
     toc-depth: 3
-link-citations: true  
+link-citations: true
+bibliography: references.bib
 execute:
   echo: false
   warning: false
@@ -74,7 +75,8 @@ The notebook includes:
 
 ## Introduction
 
-Homeownership in the United States has become somewhat less attainable for many Americans due to increasing housing prices, rising mortage rates and other increases in the cost of living. As a result, according to recent surveys, around 84% of Gen Z adults report delaying major life milestones in order to afford a home, with many turning to long-term renting instead. Nearly 75% of Gen Z say they prefer renting to owning, which is important to note as this generation represents more than 20% of the U.S. population. Growing rental demand is driving new construction as developers across the country are expected to add more than 500,000 new apartment units across the country.  
+Homeownership in the United States has become somewhat less attainable for many Americans due to increasing housing prices, rising mortage rates and other increases in the cost of living. As a result, according to recent surveys, around 84% of Gen Z adults report delaying major life milestones in order to afford a home, with many turning to long-term renting instead [@investopedia2023]. Nearly 75% of Gen Z say they prefer renting to owning, which is important to note as this generation represents more than 20% of the U.S. population [@newsweek2023]. Growing rental demand is driving new construction as developers across the country are expected to add more than 500,000 new apartment units across the country [@prnewswire2023].
+  
 
 These trends lead us to wonder if apartment rental prices vary dramatically across the U.S. A price considered as “expensive” in Texas may be considered “cheap” in New York. As many Gen Z adults are relocating to higher-cost states and more than 75% of them rent, understanding these price differences is increasingly important. Additionally, rental prices are influenced by a variety of listing features. For example, apartments with more bedrooms or bathrooms are generally associated with higher-prices. Other features such as whether pets are allowed or whether the apartment includes additional fees, may also signal higher quality or prices. These features will be incorporated into our model to assess their impact on whether an apartment is classified as high-priced or not. To create a meaningful comparison across regions, we evaluated whether each apartment is **high-priced relative to the median rent within its own state**.
 
@@ -84,7 +86,7 @@ Can a machine learning algorithm accurately predict whether an apartment listing
 
 ## Dataset
 
-We use the **Apartment for Rent Classified** dataset from the UCI Machine Learning Repository. The dataset contains:
+We use the **Apartment for Rent Classified** dataset from the UCI Machine Learning Repository [@uci_apartment]. The dataset contains:
 - 10,000+ apartment listings  
 - Structural and listing details  
 - Geographic information  
@@ -152,6 +154,8 @@ The target classes are fairly balanced, which is helpful for training and evalua
 
 # Modeling: Logistic Regression Classifier
 
+Our implementation uses scikit-learn’s logistic regression documentation and API [@sklearn_logreg].
+
 We predict `high_price` using:
 
 **Numeric features**
@@ -182,7 +186,7 @@ The logistic regression model achieves reasonable performance on the held-out te
 
 ## Summary of Findings
 
-The logistic regression classifier performed reasonably well in predicting whether an apartment is high-priced relative to its state’s median rental price. Our logistic regression model achieved an accuracy of approximately 0.7, indicating that the model correctly classified 70% of apartment listings as either high-priced or not relative to their state's median rent. The model has a precision score of 0.715 which means the model was correct about 71% of the time when predicting an apartment to be high-priced. The recall score of approximately 0.660 shows the model was able to correctly identify about 66% of actually high-priced listings. Combined, these values resulted in a F1-score of 0.686. 
+The logistic regression classifier performed reasonably well in predicting whether an apartment is high-priced relative to its state’s median rental price. Our logistic regression model achieved an accuracy of approximately 0.7, indicating that the model correctly classified 70% of apartment listings as either high-priced or not relative to their state's median rent. The model has a precision score of 0.715 which means the model was correct about 71% of the time when predicting an apartment to be high-priced. The recall score of approximately 0.660 shows the model was able to correctly identify about 66% of actually high-priced listings. Combined, these values resulted in a F1-score of 0.686[@statquest].
 
 - Overall, these metrics suggest that the model provides a reasonably balanced performance, though there is room for improvement in correctly identifying all high-priced apartments.
 
@@ -197,17 +201,4 @@ A key limitation of this analysis is that logistic regression may be too simple 
 
 Future work could expand this analysis by incorporating more advanced models such as random forests, as well as extracting additional insights through NLP features derived from apartment descriptions. It may also be valuable to explore state by state differences in greater depth and to perform regression modelling to predict exact prices rather than broader categories. Further improvements could come from adding location specific features like the neighbourhood characteristics, building age, or available amenities which may contribute more meaningfully to overall model performance.
 
-# References
-
-1. Investopedia. (2023). Gen Z is having more trouble affording a home — How some are achieving homeownership. https://www.investopedia.com/gen-z-is-having-more-trouble-affording-a-home-how-some-are-achieving-homeownership-11826137
-
-2. Newsweek. (2023). Gen Z is renting, not buying: What it means for the country’s future. https://www.newsweek.com/gen-z-renting-not-buying-what-means-country-future-2120726
-
-3. PR Newswire. (2023). Top 10 states to which Gen Zers are moving and the states they are leaving. https://www.prnewswire.com/news-releases/top-10-states-to-which-gen-zers-are-moving-and-the-states-they-are-leaving-302058380.html
-
-4. Starmer, J. (n.d.). Classification metrics educational videos [YouTube channel]. StatQuest. https://www.youtube.com/user/joshstarmer
-
-5. Scikit-Learn. (n.d.). Logistic regression & preprocessing. https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-
-6. UCI Machine Learning Repository. (n.d.). Apartment for rent classified dataset. https://archive.ics.uci.edu/ml/datasets/Apartment+for+Rent+Classified
 

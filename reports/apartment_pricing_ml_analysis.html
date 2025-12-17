@@ -24,7 +24,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="apartment_pricing_ml_analysis_files/libs/clipboard/clipboard.min.js"></script>
@@ -68,9 +88,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a></li>
   <li><a href="#limitations-and-future-work" id="toc-limitations-and-future-work" class="nav-link" data-scroll-target="#limitations-and-future-work">Limitations and Future Work</a></li>
   </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="../apartment_pricing_ml_analysis.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="apartment_pricing_ml_analysis.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -146,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Homeownership in the United States has become somewhat less attainable for many Americans due to increasing housing prices, rising mortage rates and other increases in the cost of living. As a result, according to recent surveys, around 84% of Gen Z adults report delaying major life milestones in order to afford a home, with many turning to long-term renting instead. Nearly 75% of Gen Z say they prefer renting to owning, which is important to note as this generation represents more than 20% of the U.S. population. Growing rental demand is driving new construction as developers across the country are expected to add more than 500,000 new apartment units across the country.</p>
+<p>Homeownership in the United States has become somewhat less attainable for many Americans due to increasing housing prices, rising mortage rates and other increases in the cost of living. As a result, according to recent surveys, around 84% of Gen Z adults report delaying major life milestones in order to afford a home, with many turning to long-term renting instead <span class="citation" data-cites="investopedia2023">(<a href="#ref-investopedia2023" role="doc-biblioref">Investopedia 2023</a>)</span>. Nearly 75% of Gen Z say they prefer renting to owning, which is important to note as this generation represents more than 20% of the U.S. population <span class="citation" data-cites="newsweek2023">(<a href="#ref-newsweek2023" role="doc-biblioref">Newsweek 2023</a>)</span>. Growing rental demand is driving new construction as developers across the country are expected to add more than 500,000 new apartment units across the country <span class="citation" data-cites="prnewswire2023">(<a href="#ref-prnewswire2023" role="doc-biblioref">PR Newswire 2023</a>)</span>.</p>
 <p>These trends lead us to wonder if apartment rental prices vary dramatically across the U.S. A price considered as “expensive” in Texas may be considered “cheap” in New York. As many Gen Z adults are relocating to higher-cost states and more than 75% of them rent, understanding these price differences is increasingly important. Additionally, rental prices are influenced by a variety of listing features. For example, apartments with more bedrooms or bathrooms are generally associated with higher-prices. Other features such as whether pets are allowed or whether the apartment includes additional fees, may also signal higher quality or prices. These features will be incorporated into our model to assess their impact on whether an apartment is classified as high-priced or not. To create a meaningful comparison across regions, we evaluated whether each apartment is <strong>high-priced relative to the median rent within its own state</strong>.</p>
 </section>
 <section id="research-question" class="level2">
@@ -155,7 +174,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="dataset" class="level2">
 <h2 class="anchored" data-anchor-id="dataset">Dataset</h2>
-<p>We use the <strong>Apartment for Rent Classified</strong> dataset from the UCI Machine Learning Repository. The dataset contains: - 10,000+ apartment listings<br>
+<p>We use the <strong>Apartment for Rent Classified</strong> dataset from the UCI Machine Learning Repository <span class="citation" data-cites="uci_apartment">(<a href="#ref-uci_apartment" role="doc-biblioref">UCI Machine Learning Repository, n.d.</a>)</span>. The dataset contains: - 10,000+ apartment listings<br>
 - Structural and listing details<br>
 - Geographic information<br>
 - Price and square footage</p>
@@ -182,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
 <li>saves the cleaned dataset and train/test splits to <code>data/processed/</code>.</li>
 </ul>
 <p>A preview of the cleaned dataset (saved output) is shown below.</p>
-<div id="1213358e" class="cell" data-execution_count="2">
+<div id="e4a184f7" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
@@ -288,7 +307,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
 <li>Relationship between size and price</li>
 </ul>
-<div id="147dce4c" class="cell" data-execution_count="3">
+<div id="a2471de5" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
@@ -367,7 +386,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>Table 1 summarizes the distribution of key numeric variables. Price and square footage show wide ranges, suggesting substantial variation across listings.</p>
-<div id="87a9ee9d" class="cell" data-execution_count="4">
+<div id="35925703" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
@@ -421,6 +440,7 @@ Figure&nbsp;2: Apartment size (square feet) vs.&nbsp;rental price (USD), colored
 </section>
 <section id="modeling-logistic-regression-classifier" class="level1">
 <h1>Modeling: Logistic Regression Classifier</h1>
+<p>Our implementation uses scikit-learn’s logistic regression documentation and API <span class="citation" data-cites="sklearn_logreg">(<a href="#ref-sklearn_logreg" role="doc-biblioref">Scikit-learn, n.d.</a>)</span>.</p>
 <p>We predict <code>high_price</code> using:</p>
 <p><strong>Numeric features</strong> - square_feet<br>
 - bathrooms</p>
@@ -430,7 +450,7 @@ Figure&nbsp;2: Apartment size (square feet) vs.&nbsp;rental price (USD), colored
 - fee<br>
 - has_photo</p>
 <p>We use a train-test split and a preprocessing pipeline.</p>
-<div id="17eb775c" class="cell" data-execution_count="5">
+<div id="7026d848" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
@@ -477,7 +497,7 @@ Figure&nbsp;3: Confusion matrix for the logistic regression classifier.
 <h1>Discussion</h1>
 <section id="summary-of-findings" class="level2">
 <h2 class="anchored" data-anchor-id="summary-of-findings">Summary of Findings</h2>
-<p>The logistic regression classifier performed reasonably well in predicting whether an apartment is high-priced relative to its state’s median rental price. Our logistic regression model achieved an accuracy of approximately 0.7, indicating that the model correctly classified 70% of apartment listings as either high-priced or not relative to their state’s median rent. The model has a precision score of 0.715 which means the model was correct about 71% of the time when predicting an apartment to be high-priced. The recall score of approximately 0.660 shows the model was able to correctly identify about 66% of actually high-priced listings. Combined, these values resulted in a F1-score of 0.686.</p>
+<p>The logistic regression classifier performed reasonably well in predicting whether an apartment is high-priced relative to its state’s median rental price. Our logistic regression model achieved an accuracy of approximately 0.7, indicating that the model correctly classified 70% of apartment listings as either high-priced or not relative to their state’s median rent. The model has a precision score of 0.715 which means the model was correct about 71% of the time when predicting an apartment to be high-priced. The recall score of approximately 0.660 shows the model was able to correctly identify about 66% of actually high-priced listings. Combined, these values resulted in a F1-score of 0.686<span class="citation" data-cites="statquest">(<a href="#ref-statquest" role="doc-biblioref">Starmer, n.d.</a>)</span>.</p>
 <ul>
 <li>Overall, these metrics suggest that the model provides a reasonably balanced performance, though there is room for improvement in correctly identifying all high-priced apartments.</li>
 </ul>
@@ -491,21 +511,30 @@ Figure&nbsp;3: Confusion matrix for the logistic regression classifier.
 <h2 class="anchored" data-anchor-id="limitations-and-future-work">Limitations and Future Work</h2>
 <p>A key limitation of this analysis is that logistic regression may be too simple to capture the full complexity of rental markets, which vary widely across and within states. The model’s moderate accuracy (0.70) and recall (0.66) indicate that many high priced listings remain misclassified, suggesting that important predictive features were not included.</p>
 <p>Future work could expand this analysis by incorporating more advanced models such as random forests, as well as extracting additional insights through NLP features derived from apartment descriptions. It may also be valuable to explore state by state differences in greater depth and to perform regression modelling to predict exact prices rather than broader categories. Further improvements could come from adding location specific features like the neighbourhood characteristics, building age, or available amenities which may contribute more meaningfully to overall model performance.</p>
+
 </section>
-</section>
-<section id="references" class="level1">
-<h1>References</h1>
-<ol type="1">
-<li><p>Investopedia. (2023). Gen Z is having more trouble affording a home — How some are achieving homeownership. https://www.investopedia.com/gen-z-is-having-more-trouble-affording-a-home-how-some-are-achieving-homeownership-11826137</p></li>
-<li><p>Newsweek. (2023). Gen Z is renting, not buying: What it means for the country’s future. https://www.newsweek.com/gen-z-renting-not-buying-what-means-country-future-2120726</p></li>
-<li><p>PR Newswire. (2023). Top 10 states to which Gen Zers are moving and the states they are leaving. https://www.prnewswire.com/news-releases/top-10-states-to-which-gen-zers-are-moving-and-the-states-they-are-leaving-302058380.html</p></li>
-<li><p>Starmer, J. (n.d.). Classification metrics educational videos [YouTube channel]. StatQuest. https://www.youtube.com/user/joshstarmer</p></li>
-<li><p>Scikit-Learn. (n.d.). Logistic regression &amp; preprocessing. https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression</p></li>
-<li><p>UCI Machine Learning Repository. (n.d.). Apartment for rent classified dataset. https://archive.ics.uci.edu/ml/datasets/Apartment+for+Rent+Classified</p></li>
-</ol>
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-investopedia2023" class="csl-entry" role="listitem">
+Investopedia. 2023. <span>“Gen z Is Having More Trouble Affording a Home — How Some Are Achieving Homeownership.”</span> <a href="https://www.investopedia.com/gen-z-is-having-more-trouble-affording-a-home-how-some-are-achieving-homeownership-11826137">https://www.investopedia.com/gen-z-is-having-more-trouble-affording-a-home-how-some-are-achieving-homeownership-11826137</a>.
+</div>
+<div id="ref-newsweek2023" class="csl-entry" role="listitem">
+Newsweek. 2023. <span>“Gen z Is Renting, Not Buying: What It Means for the Country’s Future.”</span> <a href="https://www.newsweek.com/gen-z-renting-not-buying-what-means-country-future-2120726">https://www.newsweek.com/gen-z-renting-not-buying-what-means-country-future-2120726</a>.
+</div>
+<div id="ref-prnewswire2023" class="csl-entry" role="listitem">
+PR Newswire. 2023. <span>“Top 10 States to Which Gen Zers Are Moving and the States They Are Leaving.”</span> <a href="https://www.prnewswire.com/news-releases/top-10-states-to-which-gen-zers-are-moving-and-the-states-they-are-leaving-302058380.html">https://www.prnewswire.com/news-releases/top-10-states-to-which-gen-zers-are-moving-and-the-states-they-are-leaving-302058380.html</a>.
+</div>
+<div id="ref-sklearn_logreg" class="csl-entry" role="listitem">
+Scikit-learn. n.d. <em>Logistic Regression</em>. <a href="https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression">https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression</a>.
+</div>
+<div id="ref-statquest" class="csl-entry" role="listitem">
+Starmer, Josh. n.d. <span>“Classification Metrics Educational Videos.”</span> YouTube channel. <a href="https://www.youtube.com/user/joshstarmer">https://www.youtube.com/user/joshstarmer</a>.
+</div>
+<div id="ref-uci_apartment" class="csl-entry" role="listitem">
+UCI Machine Learning Repository. n.d. <span>“Apartment for Rent Classified Dataset.”</span> <a href="https://archive.ics.uci.edu/ml/datasets/Apartment+for+Rent+Classified">https://archive.ics.uci.edu/ml/datasets/Apartment+for+Rent+Classified</a>.
+</div>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
